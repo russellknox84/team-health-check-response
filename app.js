@@ -59,4 +59,6 @@ app.use(express.static("./dist"))
 app.get("/health-check-response", getData)
 app.post("/health-check-response/filter-data", filterData)
 
-app.listen(3000, () => console.log("listening..."))
+const PORT = process.env.PORT || 3000
+
+app.listen(PORT, () => console.log("listening..."))
