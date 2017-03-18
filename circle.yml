@@ -20,5 +20,5 @@ deployment:
     branch: dev
     commands:
       - docker login --email=$HEROKU_EMAIL --username=$HEROKU_USER --password=$(heroku auth:token) registry.heroku.com
-      - docker tag russellknox/team-health-app-response registry.heroku.com/team-health-check/web
+      - docker tag russellknox/team-health-app-response registry.heroku.com/team-health-check-response/web
       - docker push registry.heroku.com/team-health-check-response/web
