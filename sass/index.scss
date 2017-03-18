@@ -1,0 +1,59 @@
+@import "_govuk-elements";
+
+div { // TODO - Delete me when done
+    //border: 1px solid black;
+    //box-sizing: border;
+}
+
+.column-three-quarter {
+    @include grid-column( 3/4 );
+}
+
+.container {
+   @extend %site-width-container;
+}
+
+header { 
+    background-color: $home-office;
+}
+
+header h1 {
+    margin: 0;
+}
+
+#banner-contents {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: white;
+}
+
+caption {
+    @include bold-19;
+}
+
+body {
+    @include core-19;
+    margin: 0;
+}
+
+.no-margin {
+    margin: 0px;
+}
+
+.user-response {
+    margin-bottom: 30px;
+}
+
+.questions > li {
+    border-bottom: 1px solid $border-colour;
+    padding: 15px 0;
+    margin: 0px;
+}
+
+.questions legend {
+    margin-bottom: 10px;
+}
+
+.submit-response {
+    margin-top: 30px;
+}
