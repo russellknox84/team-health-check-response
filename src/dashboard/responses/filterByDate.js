@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 
-import "../../sass/index.scss"
+import "../../../sass/index.scss"
 
-class FilterResponse extends Component {
+class FilterByDate extends Component {
 
 
     render(){
@@ -16,4 +16,4 @@ class FilterResponse extends Component {
     }
 }
 
-export default FilterResponse
+export default FilterByDate

@@ -1,6 +1,6 @@
 import React from "react"
 
-import "../../sass/index.scss"
+import "../../../sass/index.scss"
 
 const UserResponses = ({questions}) => 
     <tbody>

@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 
-import "../../sass/index.scss"
+import "../../../sass/index.scss"
 
 class DownloadCSV extends Component {
 
