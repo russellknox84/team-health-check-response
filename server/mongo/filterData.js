@@ -4,10 +4,13 @@ const responseModel = require("./response-model")
 const filterData = (req, res) => {
     const {fromDate, toDate} = req.body
 
+    const reverseDateFormat = (date) => date.split(/[-/]/).reverse().join('-');
+
     responseModel.find({})
         .where('date')
-            .gt(moment(fromDate).format("DD MMM YYYY"))
-            .lt(moment(toDate).format("DD MMM YYYY"))
+            .gt(moment(reverseDateFormat(fromDate)).format("DD MMM YYYY"))
+            .lt(moment(reverseDateFormat(toDate)).add(1, "days").format("DD MMM YYYY"))
+        .sort('date')
         .then(resp =>
             resp.map((input) =>           
                  Object.assign({}, 
@@ -16,7 +19,7 @@ const filterData = (req, res) => {
           )
         )
         .then(resp => res.send(resp))
-        .catch(err => console.log(err))
+        .catch(err => 'dsf')
 }
 
 module.exports = filterData

@@ -9,6 +9,7 @@ const getData = (req, res) => {
 
     responseModel.find({})
         .where('date').gt(moment().subtract(days, 'days'))
+        .sort('date')
         .then(resp =>
             resp.map((input) =>           
                  Object.assign({}, 
@@ -17,7 +18,7 @@ const getData = (req, res) => {
           )
         )
         .then(resp => res.send(resp))
-        .catch(err => console.log)
+        .catch(err => "df")
 }
 
 module.exports = getData
