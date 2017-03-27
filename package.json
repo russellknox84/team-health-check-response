@@ -7,7 +7,9 @@
     "start": "node app.js",
     "test": "mocha",
     "dev": "nodemon app.js",
-    "build": "webpack"
+    "build": "webpack",
+    "watch:sass": "nodemon -e scss -x 'npm run sass'",
+    "sass": "node-sass --include-path=./node_modules/govuk_frontend_toolkit/stylesheets/ --include-path=./node_modules/govuk-elements-sass/public/sass/ ./sass/index.scss ./dist/public/css/app.css"
   },
   "author": "",
   "license": "ISC",

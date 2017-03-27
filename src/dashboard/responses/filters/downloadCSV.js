@@ -45,8 +45,8 @@ class DownloadCSV extends Component {
          return (
             <button 
                 onClick={this.convertToCSV.bind(this)} 
-                className="csvDownload">
-                    <h3>download</h3>
+                className="button">
+                Download CSV file
             </button>  
          )
     }

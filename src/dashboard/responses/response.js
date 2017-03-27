@@ -11,7 +11,7 @@ class Responses extends Component {
     state = { 
         responses: [], 
         checked: 7,
-        type: "question"
+        type: 1
     }
 
     groupByQuestion(questions) {
@@ -49,10 +49,10 @@ class Responses extends Component {
     output(data, type) {
         const a = type || this.state.type
         let types;
-        if (a === "question") {
+        if (a === 0) {
             types = this.groupByQuestion(data)
         } 
-        if (a === "response") {
+        if (a === 1) {
             types = this.groupByResponse(data)
         } 
         this.setState({ responses: types, initialData: data, type: a })
@@ -96,6 +96,15 @@ class Responses extends Component {
         })
     }
 
+    filterByType = (e) => {
+        if(this.state.type === 0) {
+
+        }
+        if(this.state.type === 1) {
+
+        }
+    }
+
     type(input) {
         this.output(this.state.initialData, input)
     }
@@ -108,8 +117,6 @@ class Responses extends Component {
                     <div className="column-full">
                         <h2 className="heading-medium">User Responses</h2>
                         <hr />
-                        <span onClick={() => this.type('response')} className="heading-medium">Responses </span>
-                        <span onClick={() => this.type('question')} className="heading-medium"> Questions</span>
                     </div>
                 </div>
                 <div className="grid-row">
