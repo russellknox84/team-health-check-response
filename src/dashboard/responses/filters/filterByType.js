@@ -7,12 +7,12 @@ const FilterByType = ({filter, value}) =>
                 <fieldset>
                     <div className="form-group">
                         <div className="multiple-choice inline">
-                            <label htmlFor="0">Responses</label>
-                            <input type="radio" name="arrangeByType" value="0" onChange={filter} checked={value === 0}/>
+                            <input type="radio" checked={value === "responses"} name="arrangeByType" value="responses" onChange={filter} />
+                            <label htmlFor="0">Responses</label>  
                         </div>                        
                         <div className="multiple-choice inline">
+                            <input type="radio" checked={value === "questions"} name="arrangeByType" value="questions" onChange={filter} />
                             <label htmlFor="1">Questions</label>
-                            <input type="radio" name="arrangeByType" value="1" onChange={filter} checked={value === 1}/>
                         </div>
                     </div>
                 </fieldset>

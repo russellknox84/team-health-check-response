@@ -11,7 +11,7 @@ class Responses extends Component {
     state = { 
         responses: [], 
         checked: 7,
-        type: 1
+        type: "responses"
     }
 
     groupByQuestion(questions) {
@@ -46,23 +46,23 @@ class Responses extends Component {
         }, {})
     } 
 
-    output(data, type) {
-        const a = type || this.state.type
+    outputResponse(data, type) {
+        const outputType = type || this.state.type
         let types;
-        if (a === 0) {
+        if (outputType === "questions") {
             types = this.groupByQuestion(data)
         } 
-        if (a === 1) {
+        if (outputType === "responses") {
             types = this.groupByResponse(data)
         } 
-        this.setState({ responses: types, initialData: data, type: a })
+        this.setState({ responses: types, initialData: data, type: outputType })
     }
     
     componentDidMount() {
      axios.post("/health-check-response", {})
         .then(response => {
         const { data } = response
-          this.output(data)
+          this.outputResponse(data)
         })
     }
 
@@ -78,7 +78,7 @@ class Responses extends Component {
         })
         .then(resp => {
             const { data } = resp
-            this.output(data)
+            this.outputResponse(data)
         })
     }
 
@@ -92,21 +92,13 @@ class Responses extends Component {
         axios.post("/health-check-response", { filterByDays })
         .then(resp => {
             const { data } = resp
-            this.output(data)
+            this.outputResponse(data)
         })
     }
 
-    filterByType = (e) => {
-        if(this.state.type === 0) {
-
-        }
-        if(this.state.type === 1) {
-
-        }
-    }
-
-    type(input) {
-        this.output(this.state.initialData, input)
+    displayType = (e) => {
+        const input = e.target.value
+        this.outputResponse(this.state.initialData, input)
     }
 
     render() {

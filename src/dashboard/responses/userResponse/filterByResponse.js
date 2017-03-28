@@ -3,7 +3,6 @@ import React from "react"
 import "../../../../sass/index.scss"
 
 const FilterByResponse = ({responses}) =>
-    <div>
     <tbody>
         {responses.map(response =>          
         <tr>
@@ -18,6 +17,5 @@ const FilterByResponse = ({responses}) =>
     )}
     </tbody>
     
-    </div>
 
 export default FilterByResponse
