@@ -5,7 +5,11 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+<<<<<<< e5d87d09d91622ffb0f7942be6cac8ac7969a4f7
     "test": "mocha-webpack --webpack-config webpack.test.config.js \"test/*_test.js\" ",
+=======
+    "test": "mocha-webpack --webpack-config webpack.test.config.js \"test/*_test.js\"",
+>>>>>>> updated package json
     "dev": "nodemon app.js",
     "build": "webpack",
     "watch:sass": "nodemon -e scss -x 'npm run sass'",
