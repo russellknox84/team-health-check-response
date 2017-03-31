@@ -1,3 +1,3 @@
-import Dashboard  from "./response"
+import Dashboard  from "./responses"
 
 export { Dashboard }

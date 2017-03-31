@@ -10,8 +10,6 @@ RUN npm install
 RUN npm rebuild node-sass
 RUN npm run build
 
-RUN webpack
-
 EXPOSE 3000
 
 CMD ["node", "app.js"]
