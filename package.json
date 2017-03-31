@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "mocha-webpack --webpack-config webpack.test.config.js \"test/*_test.js\"",
+    "test": "mocha-webpack --webpack-config webpack.test.config.js \"test/*_test.js\" ",
     "dev": "nodemon app.js",
     "build": "webpack",
     "watch:sass": "nodemon -e scss -x 'npm run sass'",
@@ -16,12 +16,15 @@
   "dependencies": {
     "axios": "^0.15.3",
     "body-parser": "^1.17.1",
+    "css-modules-require-hook": "^4.0.6",
     "express": "^4.15.2",
     "moment": "^2.17.1",
     "mongoose": "^4.9.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-redux": "^5.0.3",
     "react-router-dom": "^4.0.0",
+    "redux": "^3.6.0",
     "webpack": "^2.2.1"
   },
   "devDependencies": {
@@ -38,6 +41,7 @@
     "govuk_frontend_toolkit": "^5.1.2",
     "jsdom": "^9.12.0",
     "mocha": "^3.2.0",
+    "ignore-styles": "^5.0.1",
     "mocha-webpack": "^0.7.0",
     "node-sass": "^4.5.0",
     "nodemon": "^1.11.0",

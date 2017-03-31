@@ -2,9 +2,9 @@ Feature: Welcome
  
   Presented with the Response Page
 
-  Scenario: responses to health check questions are shown
-    Given navigate to the response data page
-    Then I am presented with the submitted responses
+  Scenario: valid submission of the team health check form
+    Given I navigate to the health check form
+    Then I am presented with no error message
     
     Scenario: responses are grouped by response
     Given navigate to the response data page

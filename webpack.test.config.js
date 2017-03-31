@@ -13,4 +13,8 @@ module.exports = {
             }
         ]
     }
+<<<<<<< 71074f65a87541abc2479af6fac5c1af033a94c3
 }; 
+=======
+};
+>>>>>>> added redux and allow multiple surveys to be created
