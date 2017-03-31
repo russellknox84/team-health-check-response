@@ -8,11 +8,11 @@ const addNewQuestion = ({addOne}) =>
             <div className="column-half">
                 <h2 className="heading-small">Question</h2>
                 <div className="form-group">
-                    <label className="form-label" for="first-name-2">Title</label>
+                    <label className="form-label" htmlFor="first-name-2">Title</label>
                     <input className="form-control full-width"  name="question" type="text" autoComplete="off" />
                 </div>
                 <div className="form-group">
-                    <label className="form-label" for="select-box">Input type</label>
+                    <label className="form-label" htmlFor="select-box">Input type</label>
                     <select className="full-width form-control" id="select-box" name="type">
                         <option value="Text">Text</option>
                         <option value="Radio">Multiple choice</option>
@@ -27,11 +27,11 @@ const addNewQuestion = ({addOne}) =>
                 <fieldset id="question-configuration">
                     <div className="multiple-choice">
                         <input id="isMandatory" type="radio" name="isMandatory" value="yes" checked/>
-                        <label for="isMandatory">Yes</label>
+                        <label htmlFor="isMandatory">Yes</label>
                     </div>
                     <div className="multiple-choice">
                         <input id="isMandatory" type="radio" name="isMandatory" value="no" />
-                        <label for="isMandatory">No</label>
+                        <label htmlFor="isMandatory">No</label>
                     </div>
                 </fieldset>
             </div>

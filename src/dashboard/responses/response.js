@@ -77,12 +77,6 @@ class Responses extends Component {
         return (<div>
             <div className="container">
                 <div className="grid-row">
-                    <div className="column-full">
-                        <h2 className="heading-medium">User Responses</h2>
-                        <hr />
-                    </div>
-                </div>
-                <div className="grid-row">
                     <Filters {...this} />
                     <UserResponses responses={this.state.responses} type={this.state.type} />
                 </div> 
