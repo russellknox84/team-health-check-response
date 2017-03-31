@@ -13,11 +13,11 @@ const addNewQuestion = ({addOne}) =>
                 </div>
                 <div className="form-group">
                     <label className="form-label" for="select-box">Input type</label>
-                    <select className="form-control" id="select-box" name="type">
+                    <select className="full-width form-control" id="select-box" name="type">
                         <option value="Text">Text</option>
                         <option value="Radio">Multiple choice</option>
-                        <option value="scaled">Scaled question</option>
-                        <option value="yesNo">Yes/No question</option>
+                        <option value="Scaled">Scaled question</option>
+                        <option value="YesNo">Yes/No question</option>
                     </select>
                 </div>
             </div>
@@ -26,12 +26,12 @@ const addNewQuestion = ({addOne}) =>
                 <legend>Is the question mandatory?</legend>
                 <fieldset id="question-configuration">
                     <div className="multiple-choice">
-                        <input id="YesNo" type="radio" name="type" value="yes"  autoComplete="off"/>
-                        <label for="YesNo">Yes</label>
+                        <input id="isMandatory" type="radio" name="isMandatory" value="yes" checked/>
+                        <label for="isMandatory">Yes</label>
                     </div>
                     <div className="multiple-choice">
-                        <input id="MulitpleChoice" type="radio" name="type" value="no"  autoComplete="off"/>
-                        <label for="MulitpleChoice">No</label>
+                        <input id="isMandatory" type="radio" name="isMandatory" value="no" />
+                        <label for="isMandatory">No</label>
                     </div>
                 </fieldset>
             </div>

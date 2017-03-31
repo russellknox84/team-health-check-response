@@ -71,3 +71,26 @@ body {
 .full-width {
     width: 100%;
 }
+
+.tab {
+    @include core-19;
+    background-color: $white;
+    text-align: left;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid #bfc1c3;
+}
+
+.tab:hover {
+    background: $govuk-blue;
+    color: $white;
+}
+
+.border-right {
+    border: none;
+
+    @include media(tablet) {
+        border-right: 1px solid #bfc1c3;
+    }
+
+}

@@ -8,7 +8,7 @@ const Checks = ({match, data, questions, publishForm}) =>{
         {questions.question.map(question => {
             const Q = T[question.type]
            
-          return <div> <Q {...question} /> </div>
+            return <div> <Q {...question} /> </div>
         })}
         <div>
              <button className="button submit-response" onClick={publishForm}>Publish Form</button>

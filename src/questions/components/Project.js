@@ -18,7 +18,7 @@ class Project extends Component {
         // const validation = [...e.target.validation].map(a => {
         //     if (a.checked === true) return a.value
         // })
-        const type = e.target.type.options[e.target.type.selectedIndex].textContent
+        const type = e.target.type.value
         const values = [
                 {id: 1, value: 1},
                 {id: 2, value: 2},
@@ -28,6 +28,8 @@ class Project extends Component {
             ]
         const removeSpace = question.replace(" ", "-")
         const id = `Q${removeSpace.substring(0, 14)}`
+
+        const isMandatory = e.target.isMandatory.value === 'yes' ? true : false;
         
         
 
@@ -38,7 +40,8 @@ class Project extends Component {
             question,
             validation: "none",
             values,
-            type
+            type,
+            isMandatory
         })
 
         e.target.question.value = ""
@@ -57,7 +60,7 @@ class Project extends Component {
         return (
             <div className="container">
                 <div className="grid-row">
-                     <div className="column-one-quarter">
+                     <div className="column-one-quarter border-right">
                           <h2 className="heading-small heading-contents">Questions</h2>
                           <ProjectOverview data={this.props.project} questions={this.props.questions} publishForm={this.publishForm}/>
                      </div>

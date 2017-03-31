@@ -13,7 +13,7 @@ const addProject = (state, action) => {
     }
 
 const addQuestion = (state, action) => {
-    const { id, question, validation, type, values } = action.question
+    const { id, question, validation, type, values, isMandatory } = action.question
 
     return {...state, [action.activeProject.id]: 
         Object.assign({...state[action.activeProject.id]}, 
@@ -22,7 +22,8 @@ const addQuestion = (state, action) => {
                 question,
                 validation,
                 values,
-                type
+                type,
+                isMandatory
             }]}) }}
 
 
