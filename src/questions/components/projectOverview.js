@@ -11,7 +11,7 @@ const Checks = ({match, data, questions, publishForm}) =>{
           return <div> <Q {...question} /> </div>
         })}
         <div>
-             <button className="submit-response" onClick={publishForm}>PUBLISH FORM</button>
+             <button className="button submit-response" onClick={publishForm}>Publish Form</button>
         </div>
     </div>
 }

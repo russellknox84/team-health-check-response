@@ -18,7 +18,7 @@ class Project extends Component {
         // const validation = [...e.target.validation].map(a => {
         //     if (a.checked === true) return a.value
         // })
-        const type = e.target.type.value
+        const type = e.target.type.options[e.target.type.selectedIndex].textContent
         const values = [
                 {id: 1, value: 1},
                 {id: 2, value: 2},
@@ -57,13 +57,13 @@ class Project extends Component {
         return (
             <div className="container">
                 <div className="grid-row">
-                     <div className="column-half">
+                     <div className="column-one-quarter">
                           <h2 className="heading-small heading-contents">Questions</h2>
                           <ProjectOverview data={this.props.project} questions={this.props.questions} publishForm={this.publishForm}/>
                      </div>
                    
-                     <div className="column-half">
-                          <h2 className="heading-small heading-contents">Add Question:</h2>
+                     <div className="column-three-quarter">
+                          <h2 className="heading-small heading-contents">Add Question</h2>
                           <AddNewQuestion  addOne={this.addQuestion} />
                      </div>
                 </div>

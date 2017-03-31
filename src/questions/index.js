@@ -60,7 +60,7 @@ class Test extends Component {
     render = () => 
         <div className="container">
             <div className="grid-row">
-                <div className="column-half">
+                <div className="column-one-quarter">
                     <h2 className="heading-small heading-contents">Current Projects:</h2>
                     {this.props.projects.map(project => 
                         <ul className="list list-contents" onClick={() => this.props.activeProject(project)}>
@@ -68,7 +68,7 @@ class Test extends Component {
                         </ul>
                     )}
                 </div>
-                <div className="column-half">
+                <div className="column-three-quarter">
                     <h2 className="heading-small heading-contents">Add New Project:</h2>
                     <form onSubmit={this.addProject}>
                         <div className="form-group">
