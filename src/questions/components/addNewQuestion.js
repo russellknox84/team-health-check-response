@@ -1,6 +1,6 @@
 import React from "react"
 
-const addNewQuestion = ({addOne}) =>
+const addNewQuestion = ({addOne, activeQuestion}) =>
 
     <div>
         <form onSubmit={addOne}>
@@ -38,7 +38,11 @@ const addNewQuestion = ({addOne}) =>
         </div>
         <div className="grid-row">
             <div className="column-full">
-                <input className="button submit-response" type="submit" value="Add" />
+            {activeQuestion ?
+                <div><input className="button submit-response margin-right" type="submit" value="Update" />
+                <button className="button submit-response">Delete</button></div> :
+                <div><input className="button submit-response" type="submit" value="Add" /></div>
+            }
             </div>
         </div>
         </form>

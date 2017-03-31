@@ -56,6 +56,7 @@ const activeProject = (state = {}, action) => {
 const setActiveQuestion = (state = "", action) => {
     switch(action.type) {
         case "SET_ACTIVE_QUESTION": return action.questionId;
+        case "UNSET_ACTIVE_QUESTION": return "";
         default: return state;
     }
 }

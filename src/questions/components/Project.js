@@ -55,6 +55,11 @@ class Project extends Component {
         console.log(e + ' ' + id)
     }
 
+    unsetActiveQuestion = (e, id) => {
+        e.preventDefault()
+        this.props.unsetActiveQuestion(id);
+    }
+
     publishForm = () => {
         const formData = this.props.questions
 
@@ -68,12 +73,15 @@ class Project extends Component {
                 <div className="grid-row">
                      <div className="column-one-quarter border-right">
                           <h2 className="heading-small heading-contents">Questions</h2>
-                          <ProjectOverview data={this.props.project} questions={this.props.questions} publishForm={this.publishForm} editQuestion={this.editQuestion}/>
+                          <ProjectOverview data={this.props.project} questions={this.props.questions} publishForm={this.publishForm} editQuestion={this.editQuestion} activeQuestion={this.props.activeQuestion} unsetActiveQuestion={this.unsetActiveQuestion}/>
                      </div>
                    
                      <div className="column-three-quarter">
-                          <h2 className="heading-small heading-contents">Add Question</h2>
-                          <AddNewQuestion  addOne={this.addQuestion} />
+                            {this.props.activeQuestion ?
+                                <h2 className="heading-small heading-contents">Edit Question</h2>  :
+                                <h2 className="heading-small heading-contents">Add Question</h2>
+                            }
+                          <AddNewQuestion  addOne={this.addQuestion} activeQuestion={this.props.activeQuestion}/>
                      </div>
                 </div>
             </div>
@@ -85,13 +93,14 @@ const mapStateToProps = (state) => ({
     questions: state.projects.projects[state.projects.activeProject.id],
     project: state.projects.projects[state.projects.activeProject.id],
     activeProject: state.projects.activeProject,
-    activeQuestion: state.projects.activeQuestion,
+    activeQuestion: state.projects.setActiveQuestion,
     summary: state.projects
 })
 
 const mapStateToDispatch = (action) => ({
     addQuestion: (activeProject, question, questionId) => action({type: "ADD_QUESTION", activeProject, question}),
-    setActiveQuestion: (questionId) => action({type: "SET_ACTIVE_QUESTION", questionId})
+    setActiveQuestion: (questionId) => action({type: "SET_ACTIVE_QUESTION", questionId}),
+    unsetActiveQuestion: () => action({type: "UNSET_ACTIVE_QUESTION"})
 })
 
 export default connect(mapStateToProps, mapStateToDispatch)(Project)

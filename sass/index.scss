@@ -81,11 +81,20 @@ body {
     color: $white;
 }
 
+.tab-button {
+    @extend .tab;
+    background: $govuk-blue;
+    color: $white;
+}
+
 .border-right {
     border: none;
 
     @include media(tablet) {
         border-right: 1px solid #bfc1c3;
     }
+}
 
+.margin-right {
+    margin-right: 15px;
 }
