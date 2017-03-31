@@ -20,11 +20,11 @@ class Project extends Component {
         // })
         const type = e.target.type.value
         const values = [
-                {id: 1, value: 1},
-                {id: 2, value: 2},
-                {id: 3, value: 3},
-                {id: 4, value: 4},
-                {id: 5, value: 5}
+                {id: 1, value: 1, text: ''},
+                {id: 2, value: 2, text: ''},
+                {id: 3, value: 3, text: ''},
+                {id: 4, value: 4, text: ''},
+                {id: 5, value: 5, text: ''}
             ]
         const removeSpace = question.replace(" ", "-")
         const id = `Q${removeSpace.substring(0, 14)}`
@@ -49,6 +49,11 @@ class Project extends Component {
 
     }
 
+    editQuestion = (e, id) => {
+        e.preventDefault()
+        console.log(e + ' ' + id)
+    }
+
     publishForm = () => {
         const formData = this.props.questions
 
@@ -62,7 +67,7 @@ class Project extends Component {
                 <div className="grid-row">
                      <div className="column-one-quarter border-right">
                           <h2 className="heading-small heading-contents">Questions</h2>
-                          <ProjectOverview data={this.props.project} questions={this.props.questions} publishForm={this.publishForm}/>
+                          <ProjectOverview data={this.props.project} questions={this.props.questions} publishForm={this.publishForm} editQuestion={this.editQuestion}/>
                      </div>
                    
                      <div className="column-three-quarter">

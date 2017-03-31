@@ -1,10 +1,5 @@
 @import "_govuk-elements";
 
-div { // TODO - Delete me when done
-    //border: 1px solid black;
-    //box-sizing: border;
-}
-
 .column-three-quarter {
     @include grid-column( 3/4 );
 }
