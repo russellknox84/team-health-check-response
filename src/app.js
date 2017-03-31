@@ -10,9 +10,11 @@ import { createStore, combineReducers } from 'redux'
 import { Dashboard } from "./dashboard"
 import Test from "./questions"
 
+import { Project } from "../src/project"
 import Check from "./questions/components/Project"
 
 import projects from "./questions/reducers"
+import project from "./project/reducers"
 
 import axios from "axios"
 
@@ -35,19 +37,17 @@ const PageLayout = () =>
             <Router>
                    <div>
                         <ul>
-                            <li><Link to="/">Results</Link></li>
-                            <li><Link to="/about">Questiojns</Link></li>
+                            <li><Link to="/">Projects</Link></li>
+                            <li><Link to="/results">Results</Link></li>
+                            <li><Link to="/about">Question</Link></li>
                         </ul>
 
                         <hr/>
-
-                        <Route exact path="/" component={Dashboard}/>
+                        <Route exact path="/" component={Project}/>
+                        <Route exact path="/results" component={Dashboard}/>
                         <Route exact path="/about/:project" component={Check}/>
                         <Route exact path="/about" component={Test}/>
-                        
-                        
-                        
-
+          
                      </div>
             </Router>
          </div>
@@ -56,6 +56,7 @@ const PageLayout = () =>
 
 const rootReducer = combineReducers({
   projects,
+  project
 });
 
 const addProject = (state, action) => {
