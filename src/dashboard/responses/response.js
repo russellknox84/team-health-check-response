@@ -3,6 +3,7 @@ import axios from "axios"
 
 import UserResponses from "./userResponse"
 import Filters from "./filters"
+import { groupByQuestion, groupByResponse } from "./response_helpers"
 
 import "../../../sass/index.scss"
 
@@ -14,46 +15,16 @@ class Responses extends Component {
         type: "responses"
     }
 
-    groupByQuestion(questions) {
-        return questions.reduce((state, value) => {          
-        const test = value.userResponse.map(a => {
-            if (state[a.question]) {       
-                return Object.assign(state, 
-                    {[a.question]: [...state[a.question], {
-                        question: a.question, 
-                        userResponse: a.userResponse,
-                        date: value.date
-                    }]})                      
-            }            
-            return Object.assign(state, 
-                {[a.question]: [{
-                        question: a.question, 
-                        userResponse: a.userResponse,
-                        date: value.date
-                    }]})  
-
-        })
-        return Object.assign(state)            
-        }, {})
-    }
-
-    groupByResponse(data) {
-        return data.reduce((state, acc) => {
-            if (state[acc.date]) {  
-              return Object.assign(state, {[acc.date]: [...state[acc.date],acc.userResponse]})    
-            }
-              return Object.assign(state, {[acc.date]: [acc.userResponse]})
-        }, {})
-    } 
-
     outputResponse(data, type) {
         const outputType = type || this.state.type
         let types;
         if (outputType === "questions") {
-            types = this.groupByQuestion(data)
+            types = groupByQuestion(data)
+             console.log(types)
         } 
         if (outputType === "responses") {
-            types = this.groupByResponse(data)
+            types = groupByResponse(data)
+            console.log(types)
         } 
         this.setState({ responses: types, initialData: data, type: outputType })
     }
@@ -62,6 +33,7 @@ class Responses extends Component {
      axios.post("/health-check-response", {})
         .then(response => {
         const { data } = response
+            console.log(data)
           this.outputResponse(data)
         })
     }
@@ -102,8 +74,7 @@ class Responses extends Component {
     }
 
     render() {
-        return (
-        <div>
+        return (<div>
             <div className="container">
                 <div className="grid-row">
                     <div className="column-full">

@@ -3,7 +3,7 @@ import React from "react"
 import "../../../../sass/index.scss"
 
 const FilterByResponse = ({responses}) =>
-    <tbody>
+    <tbody class="filtered-response">
         {responses.map(response =>          
         <tr>
             {response.map(a =>

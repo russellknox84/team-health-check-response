@@ -1,4 +1,4 @@
-Given(/navigate to the health check form/i) do
+Given(/navigate to the response data page/i) do
   visit config['responses']
 end
 

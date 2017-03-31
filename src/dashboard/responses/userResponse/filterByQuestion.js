@@ -3,7 +3,7 @@ import React from "react"
 import "../../../../sass/index.scss"
 
 const FilterByQuestion = ({questions}) =>
-   <tbody>
+   <tbody class="filtered-question">
         {questions.map(question => 
             <tr>
                 <td>{question.date}</td>
