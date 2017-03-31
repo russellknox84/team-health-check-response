@@ -1,22 +1,15 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 
-class Projects extends Component {
-
+class Project extends Component {
     
     render() {
-      return (   
-          <div>
-            {this.props.projects.map(project => 
-                <div>{project}</div>  
-            )}
-          </div>
-      )  
+        return <div>{this.props.projectName}</div>
     }
 }
 
 const mapStateToProps = (state) => ({
-    projects: state.project
+    projectName: state.project.activeProject
 })
 
-export default connect(mapStateToProps)(Projects)
+export default connect(mapStateToProps)(Project)

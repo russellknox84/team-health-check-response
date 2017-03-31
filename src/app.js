@@ -10,7 +10,7 @@ import { createStore, combineReducers } from 'redux'
 import { Dashboard } from "./dashboard"
 import Test from "./questions"
 
-import { Project } from "../src/project"
+import { ProjectList, Project } from "../src/project"
 import Check from "./questions/components/Project"
 
 import projects from "./questions/reducers"
@@ -37,13 +37,16 @@ const PageLayout = () =>
             <Router>
                    <div>
                         <ul>
-                            <li><Link to="/">Projects</Link></li>
+                            <li><Link to="/projects">Projects</Link></li>
                             <li><Link to="/results">Results</Link></li>
                             <li><Link to="/about">Question</Link></li>
                         </ul>
 
                         <hr/>
-                        <Route exact path="/" component={Project}/>
+                        
+                        <Route exact path="/"/>
+                        <Route exact path="/projects/" component={ProjectList}/>
+                        <Route exact path="/projects/:project" component={Test}/>
                         <Route exact path="/results" component={Dashboard}/>
                         <Route exact path="/about/:project" component={Check}/>
                         <Route exact path="/about" component={Test}/>

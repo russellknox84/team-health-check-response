@@ -1,3 +1,4 @@
+import ProjectList from './components/ProjectList'
 import Project from './components/Project'
 
-export { Project }
+export { ProjectList, Project }
