@@ -47,6 +47,8 @@ const PageLayout = () =>
                         <Route exact path="/"/>
                         <Route exact path="/projects/" component={ProjectList}/>
                         <Route exact path="/projects/:project" component={Test}/>
+                        <Route path="/projects/:project/:survey" component={Project}/>
+ 
                         <Route exact path="/results" component={Dashboard}/>
                         <Route exact path="/about/:project" component={Check}/>
                         <Route exact path="/about" component={Test}/>

@@ -31,7 +31,6 @@ const projectIds = (state = ["Team 1", "team 2"], action) => {
 }
 
 const setActiveProject = (state, projectId) => {
-    console.log("am i being called")
     state = projectId
     return state
 }
