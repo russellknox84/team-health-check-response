@@ -51,6 +51,7 @@ class Project extends Component {
 
     editQuestion = (e, id) => {
         e.preventDefault()
+        this.props.setActiveQuestion(id);
         console.log(e + ' ' + id)
     }
 
@@ -84,11 +85,13 @@ const mapStateToProps = (state) => ({
     questions: state.projects.projects[state.projects.activeProject.id],
     project: state.projects.projects[state.projects.activeProject.id],
     activeProject: state.projects.activeProject,
+    activeQuestion: state.projects.activeQuestion,
     summary: state.projects
 })
 
 const mapStateToDispatch = (action) => ({
-    addQuestion: (activeProject, question, questionId) => action({type: "ADD_QUESTION", activeProject, question})
+    addQuestion: (activeProject, question, questionId) => action({type: "ADD_QUESTION", activeProject, question}),
+    setActiveQuestion: (questionId) => action({type: "SET_ACTIVE_QUESTION", questionId})
 })
 
 export default connect(mapStateToProps, mapStateToDispatch)(Project)

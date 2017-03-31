@@ -53,8 +53,18 @@ const activeProject = (state = {}, action) => {
     }
 }
 
+const setActiveQuestion = (state = "", action) => {
+    switch(action.type) {
+        case "SET_ACTIVE_QUESTION": return action.questionId;
+        default: return state;
+    }
+}
+
+
+
 export default combineReducers({
     projectId,
     projects,
-    activeProject
+    activeProject,
+    setActiveQuestion
 })
