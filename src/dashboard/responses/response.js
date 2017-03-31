@@ -3,6 +3,7 @@ import axios from "axios"
 
 import UserResponses from "./userResponse"
 import Filters from "./filters"
+import { groupByQuestion, groupByResponse } from "./response_helpers"
 
 import "../../../sass/index.scss"
 
@@ -11,58 +12,29 @@ class Responses extends Component {
     state = { 
         responses: [], 
         checked: 7,
-        type: "question"
+        type: "responses"
     }
 
-    groupByQuestion(questions) {
-        return questions.reduce((state, value) => {          
-        const test = value.userResponse.map(a => {
-            if (state[a.question]) {       
-                return Object.assign(state, 
-                    {[a.question]: [...state[a.question], {
-                        question: a.question, 
-                        userResponse: a.userResponse,
-                        date: value.date
-                    }]})                      
-            }            
-            return Object.assign(state, 
-                {[a.question]: [{
-                        question: a.question, 
-                        userResponse: a.userResponse,
-                        date: value.date
-                    }]})  
-
-        })
-        return Object.assign(state)            
-        }, {})
-    }
-
-    groupByResponse(data) {
-        return data.reduce((state, acc) => {
-            if (state[acc.date]) {  
-              return Object.assign(state, {[acc.date]: [...state[acc.date],acc.userResponse]})    
-            }
-              return Object.assign(state, {[acc.date]: [acc.userResponse]})
-        }, {})
-    } 
-
-    output(data, type) {
-        const a = type || this.state.type
+    outputResponse(data, type) {
+        const outputType = type || this.state.type
         let types;
-        if (a === "question") {
-            types = this.groupByQuestion(data)
+        if (outputType === "questions") {
+            types = groupByQuestion(data)
+             console.log(types)
         } 
-        if (a === "response") {
-            types = this.groupByResponse(data)
+        if (outputType === "responses") {
+            types = groupByResponse(data)
+            console.log(types)
         } 
-        this.setState({ responses: types, initialData: data, type: a })
+        this.setState({ responses: types, initialData: data, type: outputType })
     }
     
     componentDidMount() {
      axios.post("/health-check-response", {})
         .then(response => {
         const { data } = response
-          this.output(data)
+            console.log(data)
+          this.outputResponse(data)
         })
     }
 
@@ -78,7 +50,7 @@ class Responses extends Component {
         })
         .then(resp => {
             const { data } = resp
-            this.output(data)
+            this.outputResponse(data)
         })
     }
 
@@ -92,24 +64,22 @@ class Responses extends Component {
         axios.post("/health-check-response", { filterByDays })
         .then(resp => {
             const { data } = resp
-            this.output(data)
+            this.outputResponse(data)
         })
     }
 
-    type(input) {
-        this.output(this.state.initialData, input)
+    displayType = (e) => {
+        const input = e.target.value
+        this.outputResponse(this.state.initialData, input)
     }
 
     render() {
-        return (
-        <div>
+        return (<div>
             <div className="container">
                 <div className="grid-row">
                     <div className="column-full">
                         <h2 className="heading-medium">User Responses</h2>
                         <hr />
-                        <span onClick={() => this.type('response')} className="heading-medium">Responses </span>
-                        <span onClick={() => this.type('question')} className="heading-medium"> Questions</span>
                     </div>
                 </div>
                 <div className="grid-row">

@@ -5,21 +5,26 @@ import "../../../../sass/index.scss"
 class DownloadCSV extends Component {
 
     state = {}
-    constructor(){
-        super()
-    }
-
+    
     convertToCSV() {
         const dataToConvert = this.props.input
         const string = this.props.input
-        const convertArrayOfObjectsToCSV = (args) => {    
-            const result = string.map(a =>        
-                    a.userResponse.map(b =>
-                        `${a.date},${b.question},${b.userResponse}`        
-                ).join("\n")
-            )
+        const convertArrayOfObjectsToCSV = (args) => {  
+             
+             const returnHeading = (question) => 
+                question[0].userResponse.map(question => `${question.question}`)
             
-            return ["Date, Questions, Value", ...result].join("\n")
+             const returnQuestion = (results) =>
+                results.userResponse.map(question => `${question.userResponse}`)       
+                
+            const header = returnHeading(string).join(',')
+            const result = string.map(results => {
+
+               return [` 
+                    ${results.date}, ${returnQuestion(results)}`].join(",")
+            })
+           
+            return [`, ${header}`, result].join("")
         }
  
         const downloadCSV = () => {  
@@ -45,8 +50,8 @@ class DownloadCSV extends Component {
          return (
             <button 
                 onClick={this.convertToCSV.bind(this)} 
-                className="csvDownload">
-                    <h3>download</h3>
+                className="button">
+                Download CSV file
             </button>  
          )
     }

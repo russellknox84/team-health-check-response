@@ -2,13 +2,13 @@ import React from "react"
 
 import "../../../../sass/index.scss"
 
-const FilterByQuestion = ({questions}) =>{
-   return <tbody>
+const FilterByQuestion = ({questions}) =>
+   <tbody class="filtered-question">
         {questions.map(question => 
             <tr>
                 <td>{question.date}</td>
                 <td>{question.userResponse}</td>
             </tr>                       
         )}
-    </tbody>}
+    </tbody>
 export default FilterByQuestion

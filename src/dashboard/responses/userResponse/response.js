@@ -1,12 +1,13 @@
 import React from "react"
-import FitlerByResponse from "./filterByResponse"
-import FitlerByQuestion from "./filterByQuestion"
+import FilterByResponse from "./filterByResponse"
+import FilterByQuestion from "./filterByQuestion"
 
 import "../../../../sass/index.scss"
 
 const Responses = ({responses, type}) =>{
-    console.log(type)
     return <div className="column-three-quarter">
+        <h3 className="heading-medium">Responses</h3>
+     
         {Object.keys(responses).map( resp => {
             const res = responses[resp]
             return <table className="user-response">
@@ -17,9 +18,9 @@ const Responses = ({responses, type}) =>{
                         <th>Response</th>
                     </tr>
                 </thead>
-                { type === "question" ? 
-                     <FitlerByQuestion questions={res} /> : 
-                     <FitlerByResponse responses={res} />
+                { type === "questions" ? 
+                     <FilterByQuestion questions={res} /> : 
+                     <FilterByResponse responses={res} />
                 }
 
             </table>            
