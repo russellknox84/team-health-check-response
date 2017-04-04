@@ -9,21 +9,31 @@ const addNewProject = (state) => {
 
 const tempProjectStructure = {
         ["Team 1"]: {
-
+            surveysId: ["Team Health Check", "create-new-project"]
         },
         ["Team 2"]: {
-
+            surveysId: ["New Project", "Team Health Check"]
         }
     }
+
+const addSurveyIdsToProject = (state, action) => {
+    const { name, activeProject, id, url } = action.payload
+        return {...state, 
+            [activeProject]: {
+                surveysId: [...state[activeProject].surveysId, name]
+            }          
+        }             
+}      
 
 const projects = (state = tempProjectStructure, action) => {
     switch(action.type) {
         case "ADD_NEW_PROJECT": return addNewProject(state)
+        case "ADD_SURVEY": return addSurveyIdsToProject(state, action)
         default: return state;
     }
 }
 
-const projectIds = (state = ["Team 1", "team 2"], action) => {
+const projectIds = (state = ["Team 1", "Team 2"], action) => {
     switch(action.type) {
         case "ADD_NEW_PROJECT": return [...state, action.projectName ];
         default: return state;

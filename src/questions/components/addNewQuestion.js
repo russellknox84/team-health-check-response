@@ -1,51 +1,107 @@
-import React from "react"
+import React, { Component } from "react"
+import { connect } from "react-redux"
 
-const addNewQuestion = ({addOne, activeQuestion}) =>
+class AddNewQuestion extends Component {
+ 
+    publishSurvey = () => {
+        const newQuestionValues = this.props.activeQuestionValue
+        
+        this.props.updateQuestion(newQuestionValues)
+    }
 
-    <div>
-        <form onSubmit={addOne}>
-        <div className="grid-row">
-            <div className="column-half">
-                <h2 className="heading-small">Question</h2>
-                <div className="form-group">
-                    <label className="form-label" htmlFor="first-name-2">Title</label>
-                    <input className="form-control full-width"  name="question" type="text" autoComplete="off" />
-                </div>
-                <div className="form-group">
-                    <label className="form-label" htmlFor="select-box">Input type</label>
-                    <select className="full-width form-control" id="select-box" name="type">
-                        <option value="Text">Text</option>
-                        <option value="Radio">Multiple choice</option>
-                        <option value="Scaled">Scaled question</option>
-                        <option value="YesNo">Yes/No question</option>
-                    </select>
-                </div>
-            </div>
-            <div className="column-half">
-                <h2 className="heading-small">Configuration</h2>
-                <legend>Is the question mandatory?</legend>
-                <fieldset id="question-configuration">
-                    <div className="multiple-choice">
-                        <input id="isMandatory" type="radio" name="isMandatory" value="yes" checked/>
-                        <label htmlFor="isMandatory">Yes</label>
+    onQuestionUpdate = (e) => {
+        this.props.onQuestionUpdate({
+            question: e.target.value,
+            currentValues: this.props.activeQuestionValue
+        })
+    }
+
+    onTypeUpdate = (e) => {
+        this.props.onQuestionUpdate({
+            type: e.target.value,
+            currentValues: this.props.activeQuestionValue
+        })
+    }
+     
+    render = () => {
+        const {id, question, type} = this.props.activeQuestionValue
+
+        return (
+            <div>
+                <div className="grid-row">
+                    <div className="column-half">
+                        <h2 className="heading-small">Question</h2>
+                        <div className="form-group">
+                            <label className="form-label" htmlFor="first-name-2">Title</label>
+                            <input 
+                                value={question} 
+                                onChange={this.onQuestionUpdate} 
+                                className="form-control full-width"  
+                                name="question" type="text" 
+                                autoComplete="off" />
+                        </div>
+                        <div className="form-group">
+                            <label className="form-label" htmlFor="select-box">Input type</label>
+                            <select value={type} onChange={this.onTypeUpdate} className="full-width form-control" id="select-box" name="type">
+                                <option value="Text">Text</option>
+                                <option value="Radio">Multiple choice</option>
+                                <option value="Scaled">Scaled question</option>
+                                <option value="YesNo">Yes/No question</option>
+                            </select>
+                        </div>
                     </div>
-                    <div className="multiple-choice">
-                        <input id="isMandatory" type="radio" name="isMandatory" value="no" />
-                        <label htmlFor="isMandatory">No</label>
+                    <div className="column-half">
+                        <h2 className="heading-small">Configuration</h2>
+                        <legend>Is the question mandatory?</legend>
+                        <fieldset id="question-configuration">
+                            <div className="multiple-choice">
+                                <input id="isMandatory" type="radio" name="isMandatory" value="yes" checked/>
+                                <label htmlFor="isMandatory">Yes</label>
+                            </div>
+                            <div className="multiple-choice">
+                                <input id="isMandatory" type="radio" name="isMandatory" value="no" />
+                                <label htmlFor="isMandatory">No</label>
+                            </div>
+                        </fieldset>
                     </div>
-                </fieldset>
+                </div>
+                <div className="grid-row">
+                    <div className="column-full">
+                    {console.log(this.props.activeQuestion, "is prop active")}
+                    {this.props.activeQuestion ?
+                        <div>
+                            <button onClick={this.publishSurvey} className="button submit-response margin-right">Update</button>
+                            <button className="button submit-response">Delete</button>
+                        </div> :
+                        <div>
+                            <button onClick={this.publishSurvey} className="button submit-response">Add</button>
+                        </div>
+                    }
+                    </div>
+                </div>
             </div>
-        </div>
-        <div className="grid-row">
-            <div className="column-full">
-            {activeQuestion ?
-                <div><input className="button submit-response margin-right" type="submit" value="Update" />
-                <button className="button submit-response">Delete</button></div> :
-                <div><input className="button submit-response" type="submit" value="Add" /></div>
-            }
-            </div>
-        </div>
-        </form>
-    </div>
+        )
+   }
+}
 
-export default addNewQuestion
+const getActiveValues = (state) => {
+    const activeQuestion = state.questions.activeQuestion
+    const activeSurvey = state.surveys.activeSurvey
+    const questionList = state.questions.questions[activeSurvey]
+
+    return questionList.filter(question => {
+        if (question.question === activeQuestion) return question
+        return
+    })
+}
+
+const mapStateToProps = (state) => ({
+    activeQuestionValues: getActiveValues(state),
+    activeQuestionValue: state.questions.activeQuestionvalues,
+    state: state
+})
+
+const mapStateToDispatch = (action) => ({
+    onQuestionUpdate: (payload) => action({type: "UPDATE_ACTIVE_QUESTION_VALUES", payload})
+})
+export default connect(mapStateToProps, mapStateToDispatch)(AddNewQuestion)

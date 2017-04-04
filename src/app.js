@@ -8,13 +8,17 @@ import { Provider } from 'react-redux'
 import { createStore, combineReducers } from 'redux'
 
 import { Dashboard } from "./dashboard"
-import Test from "./questions"
+import Surveys from "./surveys"
 
-import { ProjectList, Project } from "../src/project"
-import Check from "./questions/components/Project"
+import { ProjectList, Project } from "../src/projects"
+import Questions from "./questions"
 
 import projects from "./questions/reducers"
-import project from "./project/reducers"
+import questions from "./questions/reducers"
+import project from "./projects/reducers"
+import surveys from "./surveys/reducers"
+
+import Survey from "./surveys"
 
 import axios from "axios"
 
@@ -38,20 +42,14 @@ const PageLayout = () =>
                    <div>
                         <ul>
                             <li><Link to="/projects">Projects</Link></li>
-                            <li><Link to="/results">Results</Link></li>
-                            <li><Link to="/about">Question</Link></li>
                         </ul>
 
                         <hr/>
                         
                         <Route exact path="/"/>
                         <Route exact path="/projects/" component={ProjectList}/>
-                        <Route exact path="/projects/:project" component={Test}/>
+                        <Route exact path="/projects/:project" component={Surveys}/>
                         <Route path="/projects/:project/:survey" component={Project}/>
- 
-                        <Route exact path="/results" component={Dashboard}/>
-                        <Route exact path="/about/:project" component={Check}/>
-                        <Route exact path="/about" component={Test}/>
           
                      </div>
             </Router>
@@ -60,8 +58,9 @@ const PageLayout = () =>
 
 
 const rootReducer = combineReducers({
-  projects,
-  project
+  questions,
+  project,
+  surveys
 });
 
 const addProject = (state, action) => {
@@ -74,7 +73,7 @@ const addProject = (state, action) => {
         }}
     }
 
-const questions = () => {
+const getQuestions = () => {
     axios.get("/questions")
         .then(question => {
             const projects = question.data.reduce((state, value) => {
@@ -92,8 +91,20 @@ const questions = () => {
                 return ids.projectTitle
             })
 
+            const questions = question.data.reduce((state, value) => {
+                    return {...state, [value.projectTitle]: value.questions}
+            }, {})
 
-            const store = createStore(rootReducer, {projects:{projects, projectId}})
+            const surveyIds = projectId
+            const surveys = projects
+
+            const initialState = {
+                ["questions"]: { questions },
+                ["surveys"]: { surveys, surveyIds },
+                //["projects"]: { projects, projectId }
+            }
+
+            const store = createStore(rootReducer, initialState)
             const App = () =>
                 <Provider store={store}>
                     <PageLayout />
@@ -103,6 +114,6 @@ const questions = () => {
         })
 }
 
-questions()
+getQuestions()
 
 

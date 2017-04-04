@@ -29,7 +29,7 @@ class Project extends Component {
 
 const mapStateToProps = (state) => ({
     projectName: state.project.activeProject,
-    surveyName: state.projects.activeProject.id
+    surveyName: state.surveys.activeSurvey.id
 })
 
 export default connect(mapStateToProps)(Project)

@@ -6,7 +6,8 @@ const groupByQuestion = (questions)  =>
                     {[a.question]: [...state[a.question], {
                         question: a.question, 
                         userResponse: a.userResponse,
-                        date: value.date
+                        date: value.date,
+                        //accValue: userResponse + state.accValue 
                     }]})                      
             }            
             return Object.assign(state, 

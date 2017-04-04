@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { Link, Route } from "react-router-dom"
 import { connect } from "react-redux"
+import axios from "axios"
 
 class ProjectList extends Component {
 
@@ -10,9 +11,11 @@ class ProjectList extends Component {
 
     addNewProject = (e) => {
         e.preventDefault()
-       
+
         const projectName = e.target.addNewProject.value
-        this.props.addNewProject(projectName)
+
+        axios.post("/api/project/createProject", { projectName })
+            .then(a => this.props.addNewProject(projectName))
     }
 
     setActiveProject = (projectId) => {

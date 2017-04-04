@@ -10,49 +10,52 @@ import "../../../sass/index.scss"
 
 class Project extends Component {
 
-    addQuestion = (e) => {
-        e.preventDefault()
-        const question = e.target.question.value
-        
-        
-        // const validation = [...e.target.validation].map(a => {
-        //     if (a.checked === true) return a.value
-        // })
-        const type = e.target.type.value
-        const values = [
-                {id: 1, value: 1, text: ''},
-                {id: 2, value: 2, text: ''},
-                {id: 3, value: 3, text: ''},
-                {id: 4, value: 4, text: ''},
-                {id: 5, value: 5, text: ''}
-            ]
-        const removeSpace = question.replace(" ", "-")
-        const id = `Q${removeSpace.substring(0, 14)}`
+    addQuestion = (questions) => {
+    //     e.preventDefault()
+    //     const question = e.target.question.value
+    //     const type = e.target.type.value
+    //     const values = [
+    //             {id: 1, value: 1, text: ''},
+    //             {id: 2, value: 2, text: ''},
+    //             {id: 3, value: 3, text: ''},
+    //             {id: 4, value: 4, text: ''},
+    //             {id: 5, value: 5, text: ''}
+    //         ]
+    //     const removeSpace = question.replace(" ", "-")
+    //     const id = `Q${removeSpace.substring(0, 14)}`
 
-        const isMandatory = e.target.isMandatory.value === 'yes' ? true : false;
+    //     const isMandatory = e.target.isMandatory.value === 'yes' ? true : false;
         
-        
+        const { question, validation } = this.props.activeSurvey
 
-        console.log(type, "type")
-
-        this.props.addQuestion(this.props.activeProject, {
-            id,
+        this.props.addQuestion(this.props.activeSurvey, 
+        {   id: 1234,
             question,
-            validation: "none",
-            values,
-            type,
-            isMandatory
+            validation,
+            values: 1234,
+            type: "Radio",
+            isMandatory: true
         })
 
         e.target.question.value = ""
 
 
-    }
+     }
 
     editQuestion = (e, id) => {
+        const state = this.props.state
         e.preventDefault()
+
         this.props.setActiveQuestion(id);
-        console.log(e + ' ' + id)
+        console.log(this.props.state, "state")
+        const activeQuestion = state.questions.questions[state.surveys.activeSurvey]
+
+        const question = activeQuestion.filter(q => {
+            if (id === q.question) return q
+            return
+        })
+  
+        this.props.setQuestionValues(question[0])
     }
 
     unsetActiveQuestion = (e, id) => {
@@ -67,21 +70,31 @@ class Project extends Component {
            .then(a => console.log('returned.....'))
     }
 
+    updateQuestion = (newQuestionValue) => {
+        const activeSurvey = this.props.activeSurvey
+        const questionId = this.props.activeQuestion
+        this.props.updateQuestion({newQuestionValue, questionId, activeSurvey})
+    }
+
     render(){
         return (
             <div className="container">
                 <div className="grid-row">
                      <div className="column-one-quarter border-right">
                           <h2 className="heading-small heading-contents">Questions</h2>
-                          <ProjectOverview data={this.props.project} questions={this.props.questions} publishForm={this.publishForm} editQuestion={this.editQuestion} activeQuestion={this.props.activeQuestion} unsetActiveQuestion={this.unsetActiveQuestion}/>
-                     </div>
-                   
+                          <ProjectOverview 
+                            data={this.props.project} 
+                            questions={this.props.questions} 
+                            publishForm={this.publishForm} 
+                            editQuestion={this.editQuestion} 
+                            activeQuestion={this.props.activeQuestion} 
+                            unsetActiveQuestion={this.unsetActiveQuestion}/>
+                     </div>                 
                      <div className="column-three-quarter">
-                            {this.props.activeQuestion ?
-                                <h2 className="heading-small heading-contents">Edit Question</h2>  :
-                                <h2 className="heading-small heading-contents">Add Question</h2>
-                            }
-                          <AddNewQuestion  addOne={this.addQuestion} activeQuestion={this.props.activeQuestion}/>
+                          <AddNewQuestion 
+                            updateQuestion={this.updateQuestion}
+                            activeQuestion={this.props.activeQuestion}
+                          />         
                      </div>
                 </div>
             </div>
@@ -89,18 +102,35 @@ class Project extends Component {
     }
 }
 
+const getActiveValues = (state) => {
+    const activeQuestion = state.questions.activeQuestion
+    const activeSurvey = state.surveys.activeSurvey
+    const questionList = state.questions.questions[activeSurvey]
+
+    return questionList.filter(question => {
+        if (question.question === activeQuestion) return question
+        return
+    })
+
+
+}
+
 const mapStateToProps = (state) => ({
-    questions: state.projects.projects[state.projects.activeProject.id],
-    project: state.projects.projects[state.projects.activeProject.id],
-    activeProject: state.projects.activeProject,
-    activeQuestion: state.projects.setActiveQuestion,
-    summary: state.projects
+    questions: state.questions.questions[state.surveys.activeSurvey],
+    project: state.project.projects[state.surveys.activeSurvey],
+    activeSurvey: state.surveys.activeSurvey,
+    activeQuestion: state.questions.activeQuestion,
+    activeQuestionValue: state.questions.activeQuestionvalues,
+    activeQuestionValues: getActiveValues(state),
+    state: state
 })
 
 const mapStateToDispatch = (action) => ({
-    addQuestion: (activeProject, question, questionId) => action({type: "ADD_QUESTION", activeProject, question}),
+    addQuestion: (activeSurvey, questions) => action({type: "ADD_QUESTION", activeSurvey, questions}),
     setActiveQuestion: (questionId) => action({type: "SET_ACTIVE_QUESTION", questionId}),
-    unsetActiveQuestion: () => action({type: "UNSET_ACTIVE_QUESTION"})
+    setQuestionValues: (values) => action({type: "SET_ACTIVE_QUESTION_VALUES", values}),
+    unsetActiveQuestion: () => action({type: "UNSET_ACTIVE_QUESTION"}),
+    updateQuestion: (payload) => action({type: "UPDATE_QUESTION", payload})
 })
 
 export default connect(mapStateToProps, mapStateToDispatch)(Project)
