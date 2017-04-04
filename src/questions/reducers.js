@@ -44,7 +44,6 @@ const updateQuestion = (state, action) => {
         if (question.question === questionId) return newQuestionValue
         return question
     })    
-
     return {...state,
         [activeSurvey]: newState    
     }
@@ -65,8 +64,10 @@ const setActiveQuestionValues = (state, action) => {
 }
 
 const updateActiveQuestionValues = (state, action) => {
-    const { currentValues, question } = action.payload
-    const { id, type, validation, values } = currentValues
+    const newValue = Object.keys(action.payload)
+    const type = action.payload[newValue]
+    const { currentValues } = action.currentValues
+    const { id, type, validation, values, question } = action.currentValues
     return Object.assign({}, { id, type, validation, values, question })
 }
 

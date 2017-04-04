@@ -4,23 +4,18 @@ import { connect } from "react-redux"
 class AddNewQuestion extends Component {
  
     publishSurvey = () => {
-        const newQuestionValues = this.props.activeQuestionValue
-        
+        const newQuestionValues = this.props.activeQuestionValue    
         this.props.updateQuestion(newQuestionValues)
     }
 
     onQuestionUpdate = (e) => {
-        this.props.onQuestionUpdate({
-            question: e.target.value,
-            currentValues: this.props.activeQuestionValue
-        })
+        const currentValues = this.props.activeQuestionValue
+        this.props.onQuestionUpdate({ question: e.target.value }, currentValues)
     }
 
     onTypeUpdate = (e) => {
-        this.props.onQuestionUpdate({
-            type: e.target.value,
-            currentValues: this.props.activeQuestionValue
-        })
+        const currentValues = this.props.activeQuestionValue
+        this.props.onQuestionUpdate({ type: e.target.value }, currentValues)
     }
      
     render = () => {
@@ -102,6 +97,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapStateToDispatch = (action) => ({
-    onQuestionUpdate: (payload) => action({type: "UPDATE_ACTIVE_QUESTION_VALUES", payload})
+    onQuestionUpdate: (payload, currentValues) => action({type: "UPDATE_ACTIVE_QUESTION_VALUES", payload, currentValues})
 })
 export default connect(mapStateToProps, mapStateToDispatch)(AddNewQuestion)
