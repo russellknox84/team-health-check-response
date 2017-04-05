@@ -65,17 +65,17 @@ class Test extends Component {
     render = () => 
         <div className="container">
             <div className="grid-row">
-                <div className="column-one-quarter">
-                    <h2 className="heading-small heading-contents">Current Surveys:</h2>
+                <div className="column-one-quarter border-right overflow-auto">
+                    <h2 className="heading-small heading-contents">Current Surveys</h2>
                     {console.log(this.props.surveys, this.props.state, "the surveys")}
                     {this.props.surveys.map(survey => 
-                        <ul className="list list-contents" onClick={() => this.props.setActiveSurvey(survey)}>
-                            <li><Link to={`${this.props.match.url}/${survey}`}>{survey}</Link></li>
-                        </ul>
+                        <div>
+                            <Link role="button" className="tab" to={`${this.props.match.url}/${survey}`} onClick={() => this.props.setActiveSurvey(survey)}>{survey}</Link>
+                        </div>
                     )}
                 </div>
                 <div className="column-three-quarter">
-                    <h2 className="heading-small heading-contents">Add new survey:</h2>
+                    <h2 className="heading-small heading-contents">Add new survey</h2>
                     <form onSubmit={this.addSurvey}>
                         <div className="form-group">
                             <input className="form-control" type="text" name="newProject" id="newProject" autoComplete="off" />

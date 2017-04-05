@@ -11,10 +11,10 @@ class Project extends Component {
         return (
             <div>
                <h1> {this.props.projectName} > {this.props.surveyName} </h1>               
-                <div>
-                    <Link to={`${this.props.match.url}/`}>Question</Link>
-                    <Link to={`${this.props.match.url}/results`}>Results</Link>
-                    <Link to={`${this.props.match.url}/overview`}>Overview</Link>
+                <div className="top-tab-container">
+                    <Link role="button" className="top-tab" to={`${this.props.match.url}/`}>Question</Link>
+                    <Link role="button" className="top-tab" to={`${this.props.match.url}/results`}>Results</Link>
+                    <Link role="button" className="top-tab" to={`${this.props.match.url}/overview`}>Overview</Link>
                 </div>
                             
                 <Route exact path={`${this.props.match.url}/`} component={Questions} />

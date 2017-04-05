@@ -34,9 +34,14 @@ class AddNewQuestion extends Component {
         const currentValues = this.props.activeQuestionValue
         this.props.onQuestionUpdate({ type: e.target.value }, currentValues)
     }
+
+    onMandatoryUpdate = (e) => {
+        const currentValues = this.props.activeQuestionValue
+        this.props.onQuestionUpdate({ mandatory: e.target.value }, currentValues)
+    }
      
     render = () => {
-        const {id, question, type} = this.props.activeQuestionValue
+        const {id, question, type, isMandatory} = this.props.activeQuestionValue
 
         return (
             <div>
@@ -67,11 +72,11 @@ class AddNewQuestion extends Component {
                         <legend>Is the question mandatory?</legend>
                         <fieldset id="question-configuration">
                             <div className="multiple-choice">
-                                <input id="isMandatory" type="radio" name="isMandatory" value="yes" defaultChecked/>
+                                <input onChange={this.onMandatoryUpdate} id="isMandatory" type="radio" name="isMandatory" value="yes" defaultChecked/>
                                 <label htmlFor="isMandatory">Yes</label>
                             </div>
                             <div className="multiple-choice">
-                                <input id="isMandatory" type="radio" name="isMandatory" value="no" />
+                                <input onChange={this.onMandatoryUpdate} id="isMandatory" type="radio" name="isMandatory" value="no"/>
                                 <label htmlFor="isMandatory">No</label>
                             </div>
                         </fieldset>
