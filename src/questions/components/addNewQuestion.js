@@ -14,13 +14,15 @@ class AddNewQuestion extends Component {
 
         this.props.deleteQuestion({ activeQuestion, activeSurvey })
         this.props.unsetActiveQuestion()
-        console.log(this.props.state)
+        this.props.unsetActiveQuestionValues()
 
     }
 
     addQuestion = () => {
         const newQuestionValues = this.props.activeQuestionValue 
         this.props.addQuestion(newQuestionValues)
+        this.props.unsetActiveQuestion()
+        this.props.unsetActiveQuestionValues()
     }
 
     onQuestionUpdate = (e) => {
@@ -102,6 +104,7 @@ const mapStateToProps = (state) => ({
 const mapStateToDispatch = (action) => ({
     onQuestionUpdate: (payload, currentValues) => action({type: "UPDATE_ACTIVE_QUESTION_VALUES", payload, currentValues}),
     deleteQuestion: (payload) => action({type: "DELETE_QUESTION", payload}),
-    unsetActiveQuestion: () => action({type: "UNSET_ACTIVE_QUESTION_VALUES"}),
+    unsetActiveQuestionValues: () => action({type: "UNSET_ACTIVE_QUESTION_VALUES"}),
+    unsetActiveQuestion: () => action({type: "UNSET_ACTIVE_QUESTION"}),
 })
 export default connect(mapStateToProps, mapStateToDispatch)(AddNewQuestion)

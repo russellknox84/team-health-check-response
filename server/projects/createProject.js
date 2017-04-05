@@ -5,7 +5,8 @@ const createProject = (req, res) => {
     const { projectName } = req.body
 
     const project = new Project({
-        projectName
+        projectName,
+        _id: projectName
     })
 
     project.save()

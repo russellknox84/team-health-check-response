@@ -3,11 +3,12 @@ const SurveySchema = require("../surveys/surveyModel")
 const Schema = require("mongoose").Schema
 
 const ProjectSchema = new db.Schema({
+    _id: String,
     projectName: String, 
-    surveys: {
-        type: Schema.Types.ObjectId,
+    surveys: [{
+        type: String,
         ref: "Survey"
-    },
+    }],
     test: String
 })
 

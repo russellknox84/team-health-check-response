@@ -1,23 +1,25 @@
 import { combineReducers } from "redux"
 
 
-const addNewProject = (state) => {
-    return {...state, ["new"]: {
-        
+const addNewProject = (state, action) => {
+    console.log(action, "new action,,,,,,")
+    return {...state, [action.projectName]: {
+        surveysId: []
     }}
 }
 
-const tempProjectStructure = {
-        ["Team 1"]: {
-            surveysId: ["Team Health Check", "create-new-project"]
-        },
-        ["Team 2"]: {
-            surveysId: ["New Project", "Team Health Check"]
-        }
-    }
+// const tempProjectStructure = {
+//         ["Team 1"]: {
+//             surveysId: ["Team Health Check", "create-new-project"]
+//         },
+//         ["Team 2"]: {
+//             surveysId: ["New Project", "Team Health Check"]
+//         }
+//     }
 
 const addSurveyIdsToProject = (state, action) => {
     const { name, activeProject, id, url } = action.payload
+    console.log("actions=-=-=-=-=-s=df-=sd-f=-sdf", action)
         return {...state, 
             [activeProject]: {
                 surveysId: [...state[activeProject].surveysId, name]
@@ -25,15 +27,15 @@ const addSurveyIdsToProject = (state, action) => {
         }             
 }      
 
-const projects = (state = tempProjectStructure, action) => {
+const projects = (state = {}, action) => {
     switch(action.type) {
-        case "ADD_NEW_PROJECT": return addNewProject(state)
+        case "ADD_NEW_PROJECT": return addNewProject(state, action)
         case "ADD_SURVEY": return addSurveyIdsToProject(state, action)
         default: return state;
     }
 }
 
-const projectIds = (state = ["Team 1", "Team 2"], action) => {
+const projectIds = (state = [], action) => {
     switch(action.type) {
         case "ADD_NEW_PROJECT": return [...state, action.projectName ];
         default: return state;

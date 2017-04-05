@@ -73,35 +73,80 @@ const addProject = (state, action) => {
         }}
     }
 
-const getQuestions = () => {
-    axios.get("/questions")
-        .then(question => {
-            const projects = question.data.reduce((state, value) => {
-                console.log(state, value)
-                return {...state, [value.projectTitle]: {
-                projectTitle: value.projectTitle,
-                id: value._id,
-                draft: value.draft,
-                published: value.published,
-                question: value.questions
-        }}
+const initRender = () => {
+    const getQuestions = () => {
+        return axios.get("/api/questions")
+    }
+    const getProjects = () => {
+        return axios.get("/api/projects")
+    }
+    const getSurveys = () => {
+        return axios.get("/api/surveys")
+    }
+    axios.all([getQuestions(), getProjects(), getSurveys()])
+        .then(axios.spread(function (question, projectsq, survey) {
+
+            console.log("first", question.data)
+            console.log("second", projectsq.data)
+            console.log("surveys", survey.data)
+
+        //     const projectss = question.data.reduce((state, value) => {
+
+        //         return {...state, [value.projectTitle]: {
+        //         projectTitle: value.projectTitle,
+        //         id: value._id,
+        //         draft: value.draft,
+        //         published: value.published,
+        //         question: value.questions
+        // }}
+        //     }, {})
+
+            const surveyIds = survey.data.map(survey => survey.surveyName)
+            
+            const surveys = survey.data.reduce((state, value) => {
+                return Object.assign(state, {[value.surveyName]: {
+                    surveysId: []
+                }})
             }, {})
 
-            const projectId = question.data.map(ids => {
-                return ids.projectTitle
+            const projects = projectsq.data.reduce((state, value) => {
+                return Object.assign(state, {[value.projectName]: {
+                    _id: value._id,
+                    surveysId: value.surveys.map(survey => survey.surveyName)
+                }})
+            }, {})
+
+            // console.log("new state++++++", projects)
+
+        //     const projectsqq = {
+        //     ["Team 1"]: {
+        //         surveysId: ["Team Health Check", "create-new-project"]
+        //     },
+        //     ["Team 2"]: {
+        //         surveysId: ["New Project", "Team Health Check"]
+        //     }
+        // }
+
+            // const surveyIds = question.data.map(ids => {
+            //     return ids.projectTitle
+            // })
+
+            const projectIds = projectsq.data.map(ids => {
+                return ids.projectName
             })
 
-            const questions = question.data.reduce((state, value) => {
-                    return {...state, [value.projectTitle]: value.questions}
+            const questions = survey.data.reduce((state, value) => {
+                    //return {...state, [value.surveyName]: value.questions.map(a => a) }
+                    return {...state, [value.surveyName]: []}
             }, {})
 
-            const surveyIds = projectId
-            const surveys = projects
+
+            // const surveys = projectss
 
             const initialState = {
                 ["questions"]: { questions },
                 ["surveys"]: { surveys, surveyIds },
-                //["projects"]: { projects, projectId }
+                ["project"]: { projects, projectIds }
             }
 
             const store = createStore(rootReducer, initialState)
@@ -111,9 +156,12 @@ const getQuestions = () => {
                 </Provider>
 
             render(<App />, entry)
-        })
+         }))
+ 
+            
+       
 }
 
-getQuestions()
+initRender()
 
 
