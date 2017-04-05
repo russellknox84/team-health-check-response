@@ -39,19 +39,16 @@ const PageLayout = () =>
         </header>
         <div className="container">
             <Router>
-                   <div>
-                        <ul>
-                            <li><Link to="/projects">Projects</Link></li>
-                        </ul>
-
-                        <hr/>
-                        
-                        <Route exact path="/"/>
-                        <Route exact path="/projects/" component={ProjectList}/>
-                        <Route exact path="/projects/:project" component={Surveys}/>
-                        <Route path="/projects/:project/:survey" component={Project}/>
-          
-                     </div>
+                <div>
+                    <div>
+                        <Link className="link" to="/projects">Projects</Link>
+                        <hr />
+                    </div>
+                    <Route exact path="/"/>
+                    <Route exact path="/projects/" component={ProjectList}/>
+                    <Route exact path="/projects/:project" component={Surveys}/>
+                    <Route path="/projects/:project/:survey" component={Project}/> 
+                    </div>
             </Router>
          </div>
     </div>
@@ -104,7 +101,7 @@ const getQuestions = () => {
                 //["projects"]: { projects, projectId }
             }
 
-            const store = createStore(rootReducer, initialState)
+            const store = createStore(rootReducer, initialState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
             const App = () =>
                 <Provider store={store}>
                     <PageLayout />
