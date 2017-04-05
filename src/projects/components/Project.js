@@ -12,12 +12,12 @@ class Project extends Component {
             <div>
                <h1> {this.props.projectName} > {this.props.surveyName} </h1>               
                 <div>
-                    <Link to={`${this.props.match.url}/questions`}>Question</Link>
+                    <Link to={`${this.props.match.url}/`}>Question</Link>
                     <Link to={`${this.props.match.url}/results`}>Results</Link>
                     <Link to={`${this.props.match.url}/overview`}>Overview</Link>
                 </div>
                             
-                <Route path={`${this.props.match.url}/questions`} component={Questions} />
+                <Route exact path={`${this.props.match.url}/`} component={Questions} />
                 <Route path={`${this.props.match.url}/results`} component={Dashboard} />
                 <Route path={`${this.props.match.url}/overview`} render={() => <div>Overview</div>} />       
             </div>
