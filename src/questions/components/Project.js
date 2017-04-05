@@ -10,34 +10,26 @@ import "../../../sass/index.scss"
 
 class Project extends Component {
 
-    addQuestion = (questions) => {
-    //     e.preventDefault()
-    //     const question = e.target.question.value
-    //     const type = e.target.type.value
-    //     const values = [
-    //             {id: 1, value: 1, text: ''},
-    //             {id: 2, value: 2, text: ''},
-    //             {id: 3, value: 3, text: ''},
-    //             {id: 4, value: 4, text: ''},
-    //             {id: 5, value: 5, text: ''}
-    //         ]
-    //     const removeSpace = question.replace(" ", "-")
-    //     const id = `Q${removeSpace.substring(0, 14)}`
-
-    //     const isMandatory = e.target.isMandatory.value === 'yes' ? true : false;
-        
-        const { question, validation } = this.props.activeSurvey
+    addQuestion = (value) => {
+        const values = [
+                {id: 1, value: 1, text: ''},
+                {id: 2, value: 2, text: ''},
+                {id: 3, value: 3, text: ''},
+                {id: 4, value: 4, text: ''},
+                {id: 5, value: 5, text: ''}
+            ]
+        //const removeSpace = question.replace(" ", "-")
+        const id = 1234
 
         this.props.addQuestion(this.props.activeSurvey, 
-        {   id: 1234,
-            question,
-            validation,
-            values: 1234,
-            type: "Radio",
-            isMandatory: true
+        {   id,
+            question: value.question || 'A question',
+            validation: value.validation || "none",
+            values,
+            type: value.type || "Radio",
+            isMandatory: value.isMandatory || true
         })
 
-        e.target.question.value = ""
 
 
      }
@@ -47,7 +39,7 @@ class Project extends Component {
         e.preventDefault()
 
         this.props.setActiveQuestion(id);
-        console.log(this.props.state, "state")
+
         const activeQuestion = state.questions.questions[state.surveys.activeSurvey]
 
         const question = activeQuestion.filter(q => {
@@ -58,9 +50,8 @@ class Project extends Component {
         this.props.setQuestionValues(question[0])
     }
 
-    unsetActiveQuestion = (e, id) => {
-        e.preventDefault()
-        this.props.unsetActiveQuestion(id);
+    unsetActiveQuestion = () => {
+        this.props.unsetActiveQuestion();
     }
 
     publishForm = () => {
@@ -74,6 +65,8 @@ class Project extends Component {
         const activeSurvey = this.props.activeSurvey
         const questionId = this.props.activeQuestion
         this.props.updateQuestion({newQuestionValue, questionId, activeSurvey})
+        this.props.unsetActiveQuestionValues()
+        this.props.unsetActiveQuestion()
     }
 
     render(){
@@ -82,6 +75,7 @@ class Project extends Component {
                 <div className="grid-row">
                      <div className="column-one-quarter border-right">
                           <h2 className="heading-small heading-contents">Questions</h2>
+                          {console.log(this.props, "th porperlislid++++++=")}
                           <ProjectOverview 
                             data={this.props.project} 
                             questions={this.props.questions} 
@@ -94,6 +88,7 @@ class Project extends Component {
                           <AddNewQuestion 
                             updateQuestion={this.updateQuestion}
                             activeQuestion={this.props.activeQuestion}
+                            addQuestion={this.addQuestion}
                           />         
                      </div>
                 </div>
@@ -102,18 +97,20 @@ class Project extends Component {
     }
 }
 
-const getActiveValues = (state) => {
-    const activeQuestion = state.questions.activeQuestion
-    const activeSurvey = state.surveys.activeSurvey
-    const questionList = state.questions.questions[activeSurvey]
+// const getActiveValues = (state) => {
+//     const activeQuestion = state.questions.activeQuestion
+//     const activeSurvey = state.surveys.activeSurvey
+//     const questionList = state.questions.questions[activeSurvey]
 
-    return questionList.filter(question => {
-        if (question.question === activeQuestion) return question
-        return
-    })
+//     console.log("the quesltion leus", activeQuestion, activeSurvey)
+
+//     return questionList.filter(question => {
+//         if (question.question === activeQuestion) return question
+//         return
+//     })
 
 
-}
+// }
 
 const mapStateToProps = (state) => ({
     questions: state.questions.questions[state.surveys.activeSurvey],
@@ -121,7 +118,7 @@ const mapStateToProps = (state) => ({
     activeSurvey: state.surveys.activeSurvey,
     activeQuestion: state.questions.activeQuestion,
     activeQuestionValue: state.questions.activeQuestionvalues,
-    activeQuestionValues: getActiveValues(state),
+    //activeQuestionValues: getActiveValues(state),
     state: state
 })
 
@@ -129,7 +126,8 @@ const mapStateToDispatch = (action) => ({
     addQuestion: (activeSurvey, questions) => action({type: "ADD_QUESTION", activeSurvey, questions}),
     setActiveQuestion: (questionId) => action({type: "SET_ACTIVE_QUESTION", questionId}),
     setQuestionValues: (values) => action({type: "SET_ACTIVE_QUESTION_VALUES", values}),
-    unsetActiveQuestion: () => action({type: "UNSET_ACTIVE_QUESTION"}),
+    unsetActiveQuestionValues: () => action({type: "UNSET_ACTIVE_QUESTION_VALUES"}),
+    unsetActiveQuestion: () => action({type: "UNSET_ACTIVE_QUESTION"}), 
     updateQuestion: (payload) => action({type: "UPDATE_QUESTION", payload})
 })
 

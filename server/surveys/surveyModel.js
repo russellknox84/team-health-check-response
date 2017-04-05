@@ -1,11 +1,12 @@
 const db = require("../mongo/config")
-const mongoose = require("mongoose")
+const Schema = require("mongoose").Schema
 
 const SurveySchema = new db.Schema({
     surveyName: String, 
-    // surveyIds: {
-    //     ref: "Surveys"
-    // }
+    questions: {
+        type: Schema.Types.ObjectId,
+        ref: "Questions"
+    }
 })
 
 const SurveyModel = db.model("Survey", SurveySchema)

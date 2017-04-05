@@ -3,9 +3,24 @@ import { connect } from "react-redux"
 
 class AddNewQuestion extends Component {
  
-    publishSurvey = () => {
+    updateQuestion = () => {
         const newQuestionValues = this.props.activeQuestionValue    
         this.props.updateQuestion(newQuestionValues)
+    }
+
+    deleteQuestion = () => {
+        const activeQuestion = this.props.activeQuestion
+        const activeSurvey = this.props.activeSurvey
+
+        this.props.deleteQuestion({ activeQuestion, activeSurvey })
+        this.props.unsetActiveQuestion()
+        console.log(this.props.state)
+
+    }
+
+    addQuestion = () => {
+        const newQuestionValues = this.props.activeQuestionValue 
+        this.props.addQuestion(newQuestionValues)
     }
 
     onQuestionUpdate = (e) => {
@@ -50,7 +65,7 @@ class AddNewQuestion extends Component {
                         <legend>Is the question mandatory?</legend>
                         <fieldset id="question-configuration">
                             <div className="multiple-choice">
-                                <input id="isMandatory" type="radio" name="isMandatory" value="yes" checked/>
+                                <input id="isMandatory" type="radio" name="isMandatory" value="yes" defaultChecked/>
                                 <label htmlFor="isMandatory">Yes</label>
                             </div>
                             <div className="multiple-choice">
@@ -65,11 +80,11 @@ class AddNewQuestion extends Component {
                     {console.log(this.props.activeQuestion, "is prop active")}
                     {this.props.activeQuestion ?
                         <div>
-                            <button onClick={this.publishSurvey} className="button submit-response margin-right">Update</button>
-                            <button className="button submit-response">Delete</button>
+                            <button onClick={this.updateQuestion} className="button submit-response margin-right">Update</button>
+                            <button onClick={this.deleteQuestion} className="button submit-response">Delete</button>
                         </div> :
                         <div>
-                            <button onClick={this.publishSurvey} className="button submit-response">Add</button>
+                            <button onClick={this.addQuestion} className="button submit-response">Add</button>
                         </div>
                     }
                     </div>
@@ -78,25 +93,15 @@ class AddNewQuestion extends Component {
         )
    }
 }
-
-const getActiveValues = (state) => {
-    const activeQuestion = state.questions.activeQuestion
-    const activeSurvey = state.surveys.activeSurvey
-    const questionList = state.questions.questions[activeSurvey]
-
-    return questionList.filter(question => {
-        if (question.question === activeQuestion) return question
-        return
-    })
-}
-
 const mapStateToProps = (state) => ({
-    activeQuestionValues: getActiveValues(state),
     activeQuestionValue: state.questions.activeQuestionvalues,
+    activeSurvey: state.surveys.activeSurvey,
     state: state
 })
 
 const mapStateToDispatch = (action) => ({
-    onQuestionUpdate: (payload, currentValues) => action({type: "UPDATE_ACTIVE_QUESTION_VALUES", payload, currentValues})
+    onQuestionUpdate: (payload, currentValues) => action({type: "UPDATE_ACTIVE_QUESTION_VALUES", payload, currentValues}),
+    deleteQuestion: (payload) => action({type: "DELETE_QUESTION", payload}),
+    unsetActiveQuestion: () => action({type: "UNSET_ACTIVE_QUESTION_VALUES"}),
 })
 export default connect(mapStateToProps, mapStateToDispatch)(AddNewQuestion)

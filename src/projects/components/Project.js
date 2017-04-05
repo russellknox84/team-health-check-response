@@ -10,9 +10,7 @@ class Project extends Component {
     render = () => {
         return (
             <div>
-               <h1> {this.props.projectName} </h1>
-               <h1> {this.props.surveyName} </h1>
-               
+               <h1> {this.props.projectName} > {this.props.surveyName} </h1>               
                 <div>
                     <Link to={`${this.props.match.url}/questions`}>Question</Link>
                     <Link to={`${this.props.match.url}/results`}>Results</Link>
@@ -20,7 +18,7 @@ class Project extends Component {
                 </div>
                             
                 <Route path={`${this.props.match.url}/questions`} component={Questions} />
-                <Route path={`${this.props.match.url}/results`} render={() => <div>Qyestion</div>} />
+                <Route path={`${this.props.match.url}/results`} component={Dashboard} />
                 <Route path={`${this.props.match.url}/overview`} render={() => <div>Overview</div>} />       
             </div>
         )
@@ -29,7 +27,7 @@ class Project extends Component {
 
 const mapStateToProps = (state) => ({
     projectName: state.project.activeProject,
-    surveyName: state.surveys.activeSurvey.id
+    surveyName: state.surveys.activeSurvey
 })
 
 export default connect(mapStateToProps)(Project)

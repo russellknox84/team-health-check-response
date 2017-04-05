@@ -16,14 +16,7 @@ const Checks = ({match, questions, publishForm, editQuestion, activeQuestion, un
                      />
                  </div>
             )
-        })}
-       
-        {activeQuestion ?
-            <button className="full-width tab-button" 
-                    onClick={(e) => unsetActiveQuestion(e)}  
-                    id="addMoreQuestions">Add more questions
-            </button>  :  null
-        }                 
+        })}               
         <div>
              <button className="button submit-response" onClick={publishForm}>Publish Form</button>
         </div>
