@@ -40,9 +40,8 @@ const PageLayout = () =>
         <div className="container">
             <Router>
                 <div>
-                    <div>
+                    <div className="spacing">
                         <Link className="link" to="/projects">Projects</Link>
-                        <hr />
                     </div>
                     <Route exact path="/"/>
                     <Route exact path="/projects/" component={ProjectList}/>

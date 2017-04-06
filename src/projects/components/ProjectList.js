@@ -54,7 +54,7 @@ class ProjectList extends Component {
                         </div>
                     </form>
                     <div>
-                        <button onClick={this.findProject}>Find Project</button>
+                        <button className="hidden" onClick={this.findProject}>Find Project</button>
                     </div>
                  </div>
             </div>

@@ -10,7 +10,7 @@ class Project extends Component {
     render = () => {
         return (
             <div>
-               <h1> {this.props.projectName} > {this.props.surveyName} </h1>               
+                <h1 className="spacing"> {this.props.projectName} > {this.props.surveyName} </h1>               
                 <div className="top-tab-container">
                     <Link role="button" className="top-tab" to={`${this.props.match.url}/`}>Question</Link>
                     <Link role="button" className="top-tab" to={`${this.props.match.url}/results`}>Results</Link>

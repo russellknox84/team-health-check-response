@@ -74,7 +74,6 @@ class Project extends Component {
             <div className="container">
                 <div className="grid-row">
                      <div className="column-one-quarter border-right">
-                          <h2 className="heading-small heading-contents">Questions</h2>
                           {console.log(this.props, "th porperlislid++++++=")}
                           <ProjectOverview 
                             data={this.props.project} 
