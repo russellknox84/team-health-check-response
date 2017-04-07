@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import uuid from "uuid"
 
 import axios from "axios"
 
@@ -11,6 +12,7 @@ import "../../../sass/index.scss"
 class Project extends Component {
 
     addQuestion = (value) => {
+        
         const values = [
                 {id: 1, value: 1},
                 {id: 2, value: 2},
@@ -19,7 +21,7 @@ class Project extends Component {
                 {id: 5, value: 5}
             ]
 
-        const id = "a1234"
+        const id = uuid.v4()
 
         this.props.addQuestion(this.props.activeSurvey, 
         {   id,
