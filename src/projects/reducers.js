@@ -2,24 +2,13 @@ import { combineReducers } from "redux"
 
 
 const addNewProject = (state, action) => {
-    console.log(action, "new action,,,,,,")
     return {...state, [action.projectName]: {
         surveysId: []
     }}
 }
 
-// const tempProjectStructure = {
-//         ["Team 1"]: {
-//             surveysId: ["Team Health Check", "create-new-project"]
-//         },
-//         ["Team 2"]: {
-//             surveysId: ["New Project", "Team Health Check"]
-//         }
-//     }
-
 const addSurveyIdsToProject = (state, action) => {
     const { name, activeProject, id, url } = action.payload
-    console.log("actions=-=-=-=-=-s=df-=sd-f=-sdf", action)
         return {...state, 
             [activeProject]: {
                 surveysId: [...state[activeProject].surveysId, name]
