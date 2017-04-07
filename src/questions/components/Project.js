@@ -12,26 +12,24 @@ class Project extends Component {
 
     addQuestion = (value) => {
         const values = [
-                {id: 1, value: 1, text: ''},
-                {id: 2, value: 2, text: ''},
-                {id: 3, value: 3, text: ''},
-                {id: 4, value: 4, text: ''},
-                {id: 5, value: 5, text: ''}
+                {id: 1, value: 1},
+                {id: 2, value: 2},
+                {id: 3, value: 3},
+                {id: 4, value: 4},
+                {id: 5, value: 5}
             ]
-        //const removeSpace = question.replace(" ", "-")
-        const id = 1234
+
+        const id = "a1234"
 
         this.props.addQuestion(this.props.activeSurvey, 
         {   id,
-            question: value.question || 'A question',
-            validation: value.validation || "none",
+            question: value.question,
+            validation: value.validation,
             values,
-            type: value.type || "Radio",
+            type: value.type || "Text",
             isMandatory: value.isMandatory || true,
             activeSurvey: this.props.activeSurvey
         })
-
-
 
      }
 
@@ -57,8 +55,8 @@ class Project extends Component {
 
     publishForm = () => {
         const formData = this.props.questions
-        console.log(formData, "form-data.....")
         const activeSurvey = this.props.activeSurvey
+
         axios.post("/api/project/createQuestion", {formData, activeSurvey})
            .then(a => console.log('returned.....'))
     }

@@ -23,23 +23,27 @@ class AddNewQuestion extends Component {
     }
 
     addQuestion = () => {
-        const newQuestionValues = this.props.activeQuestionValue 
+        const newQuestionValues = this.props.activeQuestionValue
+
         this.props.addQuestion(newQuestionValues)
         this.props.unsetActiveQuestion()
         this.props.unsetActiveQuestionValues()
     }
 
     onQuestionUpdate = (e) => {
+        console.log("question", e.target.value)
         const currentValues = this.props.activeQuestionValue
         this.props.onQuestionUpdate({ question: e.target.value }, currentValues)
     }
 
     onTypeUpdate = (e) => {
+        console.log("typevalue", e.target.value)
         const currentValues = this.props.activeQuestionValue
         this.props.onQuestionUpdate({ type: e.target.value }, currentValues)
     }
 
     onMandatoryUpdate = (e) => {
+        console.log("mandatory", e.target.value)
         const currentValues = this.props.activeQuestionValue
         this.props.onQuestionUpdate({ isMandatory: e.target.value }, currentValues)
     }
@@ -86,7 +90,6 @@ class AddNewQuestion extends Component {
                 </div>
                 <div className="grid-row">
                     <div className="column-full">
-                    {console.log(this.props.activeQuestion, "is prop active")}
                     {this.props.activeQuestion ?
                         <div>
                             <button onClick={this.updateQuestion} className="button submit-response margin-right">Update</button>

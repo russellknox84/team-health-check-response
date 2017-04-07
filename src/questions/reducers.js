@@ -75,7 +75,6 @@ const setActiveQuestionValues = (state, action) => {
 }
 
 const updateActiveQuestionValues = (state, action) => {
-
     const currentValues = action.currentValues
     
     const newValues = Object.keys(action.payload).reduce((acc, values) => {
