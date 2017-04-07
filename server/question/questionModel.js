@@ -2,7 +2,7 @@ const db = require("../mongo/config")
 
 const QuestionSchema = new db.Schema({
     _id: String,
-    id: Number,
+    id: String,
     activeSurvey: String,
     date: Date,
     url: String,

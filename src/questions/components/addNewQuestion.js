@@ -23,25 +23,29 @@ class AddNewQuestion extends Component {
     }
 
     addQuestion = () => {
-        const newQuestionValues = this.props.activeQuestionValue 
+        const newQuestionValues = this.props.activeQuestionValue
+
         this.props.addQuestion(newQuestionValues)
         this.props.unsetActiveQuestion()
         this.props.unsetActiveQuestionValues()
     }
 
     onQuestionUpdate = (e) => {
+        console.log("question", e.target.value)
         const currentValues = this.props.activeQuestionValue
         this.props.onQuestionUpdate({ question: e.target.value }, currentValues)
     }
 
     onTypeUpdate = (e) => {
+        console.log("typevalue", e.target.value)
         const currentValues = this.props.activeQuestionValue
         this.props.onQuestionUpdate({ type: e.target.value }, currentValues)
     }
 
     onMandatoryUpdate = (e) => {
+        console.log("mandatory", e.target.value)
         const currentValues = this.props.activeQuestionValue
-        this.props.onQuestionUpdate({ mandatory: e.target.value }, currentValues)
+        this.props.onQuestionUpdate({ isMandatory: e.target.value }, currentValues)
     }
      
     render = () => {
@@ -65,9 +69,7 @@ class AddNewQuestion extends Component {
                             <label className="form-label" htmlFor="select-box">Input type</label>
                             <select value={type} onChange={this.onTypeUpdate} className="full-width form-control" id="select-box" name="type">
                                 <option value="Text">Text</option>
-                                <option value="Radio">Multiple choice</option>
-                                <option value="Scaled">Scaled question</option>
-                                <option value="YesNo">Yes/No question</option>
+                                <option value="Radio">Scaled question</option>
                             </select>
                         </div>
                     </div>
@@ -88,7 +90,6 @@ class AddNewQuestion extends Component {
                 </div>
                 <div className="grid-row">
                     <div className="column-full">
-                    {console.log(this.props.activeQuestion, "is prop active")}
                     {this.props.activeQuestion ?
                         <div>
                             <button onClick={this.updateQuestion} className="button submit-response margin-right">Update</button>
