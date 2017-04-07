@@ -36,8 +36,6 @@ class AddNewQuestion extends Component {
     }
 
     onMandatoryUpdate = (e) => {
-        console.log('e is this...');
-        console.log(e);
         const currentValues = this.props.activeQuestionValue
         this.props.onQuestionUpdate({ isMandatory: e.target.value }, currentValues)
     }
@@ -62,8 +60,8 @@ class AddNewQuestion extends Component {
                         <div className="form-group">
                             <label className="form-label" htmlFor="select-box">Input type</label>
                             <select value={type} onChange={this.onTypeUpdate} className="full-width form-control" id="select-box" name="type">
-                                <option value="text">Text</option>
-                                <option value="radio">Scaled question</option>
+                                <option value="Text">Text</option>
+                                <option value="Radio">Scaled question</option>
                             </select>
                         </div>
                     </div>
