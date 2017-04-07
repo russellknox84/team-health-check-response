@@ -136,3 +136,30 @@ body {
 .hidden {
     visibility: hidden;
 }
+
+.navigation {
+    padding: 5px 10px;
+    list-style-type: none;
+}
+
+.navigation li {
+    display: inline;
+}
+
+.navigation a {
+    color: $black;
+    text-decoration: none;
+}
+
+.navigation a:visited {
+    color: $black;
+}
+
+.navigation a:hover {
+    border-bottom: 2px solid $govuk-blue;
+}
+
+.spacer {
+    display: inline;
+    margin: 0px 5px;
+}

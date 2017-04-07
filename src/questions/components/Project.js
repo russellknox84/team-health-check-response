@@ -74,21 +74,21 @@ class Project extends Component {
             <div className="container">
                 <div className="grid-row">
                      <div className="column-one-quarter border-right">
-                          {console.log(this.props, "th porperlislid++++++=")}
-                          <ProjectOverview 
+                        <ProjectOverview 
                             data={this.props.project} 
                             questions={this.props.questions} 
                             publishForm={this.publishForm} 
                             editQuestion={this.editQuestion} 
                             activeQuestion={this.props.activeQuestion} 
-                            unsetActiveQuestion={this.unsetActiveQuestion}/>
+                            unsetActiveQuestion={this.unsetActiveQuestion}
+                        />
                      </div>                 
                      <div className="column-three-quarter">
-                          <AddNewQuestion 
+                        <AddNewQuestion 
                             updateQuestion={this.updateQuestion}
                             activeQuestion={this.props.activeQuestion}
                             addQuestion={this.addQuestion}
-                          />         
+                        />         
                      </div>
                 </div>
             </div>

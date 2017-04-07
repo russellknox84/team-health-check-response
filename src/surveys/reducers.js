@@ -27,8 +27,13 @@ const surveyIds = (state = [], action) => {
 const activeSurvey = (state = "", action) => {
     switch(action.type) {
         case "SET_ACTIVE_SURVEY": return action.surveyName;
+        case "UNSET_ACTIVE_SURVEY": return unsetActiveSurvey(state, action);
         default: return state;
     }
+}
+
+const unsetActiveSurvey = (state, action) => {
+    return ""
 }
 
 // const surveys = (state = {}, action) =>{

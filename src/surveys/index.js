@@ -17,6 +17,9 @@ class Test extends Component {
         console.log(this.props.state, "props state cdm")
         axios.get("/api/questions")
             .then(response => console.log(response))
+        this.props.unsetActiveSurvey();
+        this.props.unsetActiveQuestion();
+
     }
 
     deleteId = (id) => {
@@ -99,8 +102,9 @@ const mapDispatchToProps = (action) => ({
     addSurvey: (input) => {
         action({type: "ADD_SURVEY", payload: input})
     },
-    setActiveSurvey: (surveyName) => action({type: "SET_ACTIVE_SURVEY", surveyName})
-
+    setActiveSurvey: (surveyName) => action({type: "SET_ACTIVE_SURVEY", surveyName}),
+    unsetActiveSurvey: () => action({type: "UNSET_ACTIVE_SURVEY"}),
+    unsetActiveQuestion: () => action({type: "UNSET_ACTIVE_QUESTION"})
 })
     
 export default connect(mapStateToProps, mapDispatchToProps)(Test)

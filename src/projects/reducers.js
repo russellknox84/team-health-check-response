@@ -50,8 +50,13 @@ const setActiveProject = (state, projectId) => {
 const activeProject = (state = "", action) => {
     switch(action.type) {
         case "SET_ACTIVE_PROJECT": return action.projectId;
+        case "UNSET_ACTIVE_PROJECT": return unsetActiveProject(state, action);
         default: return state;
     }
+}
+
+const unsetActiveProject = (state, action) => {
+    return ""
 }
 
 export default combineReducers({

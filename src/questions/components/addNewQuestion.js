@@ -63,7 +63,8 @@ class AddNewQuestion extends Component {
                                 onChange={this.onQuestionUpdate} 
                                 className="form-control full-width"  
                                 name="question" type="text" 
-                                autoComplete="off" />
+                                autoComplete="off" 
+                            />
                         </div>
                         <div className="form-group">
                             <label className="form-label" htmlFor="select-box">Input type</label>
@@ -115,6 +116,6 @@ const mapStateToDispatch = (action) => ({
     onQuestionUpdate: (payload, currentValues) => action({type: "UPDATE_ACTIVE_QUESTION_VALUES", payload, currentValues}),
     deleteQuestion: (payload) => action({type: "DELETE_QUESTION", payload}),
     unsetActiveQuestionValues: () => action({type: "UNSET_ACTIVE_QUESTION_VALUES"}),
-    unsetActiveQuestion: () => action({type: "UNSET_ACTIVE_QUESTION"}),
+    unsetActiveQuestion: () => action({type: "UNSET_ACTIVE_QUESTION"})
 })
 export default connect(mapStateToProps, mapStateToDispatch)(AddNewQuestion)

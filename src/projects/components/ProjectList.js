@@ -5,8 +5,10 @@ import axios from "axios"
 
 class ProjectList extends Component {
 
-    componentDidMount(){
-        //console.log(this.props.state)
+    componentDidMount = () => {
+        this.props.unsetActiveProject();
+        this.props.unsetActiveSurvey();
+        this.props.unsetActiveQuestion();        
     }
 
     addNewProject = (e) => {
@@ -70,7 +72,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     addNewProject: (projectName) => dispatch({type: "ADD_NEW_PROJECT", projectName }),
-    setActiveProject: (projectId) => dispatch({type: "SET_ACTIVE_PROJECT", projectId })
+    setActiveProject: (projectId) => dispatch({type: "SET_ACTIVE_PROJECT", projectId }),
+    unsetActiveProject: () => dispatch({type: "UNSET_ACTIVE_PROJECT"}),
+    unsetActiveSurvey: () => dispatch({type: "UNSET_ACTIVE_SURVEY"}),
+    unsetActiveQuestion: () => dispatch({type: "UNSET_ACTIVE_QUESTION"})
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectList)

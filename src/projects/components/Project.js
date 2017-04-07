@@ -9,8 +9,7 @@ class Project extends Component {
     
     render = () => {
         return (
-            <div>
-                <h1 className="spacing"> {this.props.projectName} > {this.props.surveyName} </h1>               
+            <div>              
                 <div className="top-tab-container">
                     <Link role="button" className="top-tab" to={`${this.props.match.url}/`}>Question</Link>
                     <Link role="button" className="top-tab" to={`${this.props.match.url}/results`}>Results</Link>
@@ -26,8 +25,6 @@ class Project extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    projectName: state.project.activeProject,
-    surveyName: state.surveys.activeSurvey
 })
 
 export default connect(mapStateToProps)(Project)
