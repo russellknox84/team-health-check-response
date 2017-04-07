@@ -2,32 +2,35 @@ const QuestionModel = require("./questionModel")
 const SurveyModel = require("../surveys/surveyModel")
 
 const createQuestion = (req, res) => {
-    const { id, question, validation, values, type, isMandatory, activeSurvey } = req.body.formData[0]
-    console.log(req.body.formData[0])
+
+    const { id, question, validation, values, type, isMandatory } = req.body.formData
+    const activeSurvey = req.body.activeSurvey
+
     SurveyModel.findById(activeSurvey)
         .then(survey => {
-        console.log("the surveys....", survey)
-        const questionValues = new QuestionModel({
-            _id: question,
-            id,
-            projectTitle: question,
-            date: new Date(),
-            // url: String,
-            // draft: Boolean,
-            // published: Boolean,
-            questions: question
+
+        req.body.formData.forEach( question => {
+ 
+            const questionValues = new QuestionModel({
+                _id: question.question,
+                id: question.id,
+                activeSurvey: question.question,
+                isMandatory: question.isMandatory,
+                date: new Date(),
+                values: question.values,
+                type: question.type,
+                validation: question.validation,
+                question: question.question
+            })
+            
+            survey.questions.push(questionValues)
+            questionValues.save()
         })
-        
-        survey.questions.push(questionValues)
 
         survey.save()
-        questionValues.save()
         res.send()
     })
     .catch(err => console.log(err))
-
-
-
 }
 
 module.exports = createQuestion

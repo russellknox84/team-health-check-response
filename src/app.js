@@ -13,7 +13,7 @@ import Surveys from "./surveys"
 import { ProjectList, Project } from "../src/projects"
 import Questions from "./questions"
 
-import projects from "./questions/reducers"
+import results from "./dashboard/reducers"
 import questions from "./questions/reducers"
 import project from "./projects/reducers"
 import surveys from "./surveys/reducers"
@@ -39,16 +39,19 @@ const PageLayout = () =>
         </header>
         <div className="container">
             <Router>
-                <div>
-                    <div>
-                        <Link className="link" to="/projects">Projects</Link>
-                        <hr />
-                    </div>
-                    <Route exact path="/"/>
-                    <Route exact path="/projects/" component={ProjectList}/>
-                    <Route exact path="/projects/:project" component={Surveys}/>
-                    <Route path="/projects/:project/:survey" component={Project}/> 
-                    </div>
+                   <div>
+                        <ul>
+                            <li><Link to="/projects">Projects</Link></li>
+                        </ul>
+
+                        <hr/>
+                        
+                        <Route exact path="/"/>
+                        <Route exact path="/projects/" component={ProjectList}/>
+                        <Route exact path="/projects/:project" component={Surveys}/>
+                        <Route path="/projects/:project/:survey" component={Project}/>
+          
+                     </div>
             </Router>
          </div>
     </div>
@@ -57,7 +60,8 @@ const PageLayout = () =>
 const rootReducer = combineReducers({
   questions,
   project,
-  surveys
+  surveys,
+  results
 });
 
 const addProject = (state, action) => {
@@ -83,20 +87,11 @@ const initRender = () => {
     axios.all([getQuestions(), getProjects(), getSurveys()])
         .then(axios.spread(function (question, projectsq, survey) {
 
-            console.log("first", question.data)
-            console.log("second", projectsq.data)
-            console.log("surveys", survey.data)
+            // console.log("question", question.data)
+            // console.log("second", projectsq.data)
+            // console.log("surveys", survey.data)
 
-        //     const projectss = question.data.reduce((state, value) => {
-
-        //         return {...state, [value.projectTitle]: {
-        //         projectTitle: value.projectTitle,
-        //         id: value._id,
-        //         draft: value.draft,
-        //         published: value.published,
-        //         question: value.questions
-        // }}
-        //     }, {})
+            
 
             const surveyIds = survey.data.map(survey => survey.surveyName)
             
@@ -113,40 +108,27 @@ const initRender = () => {
                 }})
             }, {})
 
-            // console.log("new state++++++", projects)
-
-        //     const projectsqq = {
-        //     ["Team 1"]: {
-        //         surveysId: ["Team Health Check", "create-new-project"]
-        //     },
-        //     ["Team 2"]: {
-        //         surveysId: ["New Project", "Team Health Check"]
-        //     }
-        // }
-
-            // const surveyIds = question.data.map(ids => {
-            //     return ids.projectTitle
-            // })
 
             const projectIds = projectsq.data.map(ids => {
                 return ids.projectName
             })
 
             const questions = survey.data.reduce((state, value) => {
-                    //return {...state, [value.surveyName]: value.questions.map(a => a) }
-                    return {...state, [value.surveyName]: []}
+
+                    return {...state, [value.surveyName]: value.questions}
             }, {})
 
-
-            // const surveys = projectss
 
             const initialState = {
                 ["questions"]: { questions },
                 ["surveys"]: { surveys, surveyIds },
-                ["project"]: { projects, projectIds }
+                ["project"]: { projects, projectIds },
+                ["results"]: {}
             }
 
-            const store = createStore(rootReducer, initialState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+            console.log(initialState)
+
+            const store = createStore(rootReducer, initialState)
             const App = () =>
                 <Provider store={store}>
                     <PageLayout />

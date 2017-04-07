@@ -2,6 +2,11 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 
 class AddNewQuestion extends Component {
+
+    componentDidMount = () => {
+        this.props.unsetActiveQuestion()
+        this.props.unsetActiveQuestionValues()
+    }
  
     updateQuestion = () => {
         const newQuestionValues = this.props.activeQuestionValue    
@@ -15,7 +20,6 @@ class AddNewQuestion extends Component {
         this.props.deleteQuestion({ activeQuestion, activeSurvey })
         this.props.unsetActiveQuestion()
         this.props.unsetActiveQuestionValues()
-
     }
 
     addQuestion = () => {

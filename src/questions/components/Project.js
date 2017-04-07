@@ -57,8 +57,9 @@ class Project extends Component {
 
     publishForm = () => {
         const formData = this.props.questions
-        console.log(formData)
-        axios.post("/api/project/createQuestion", {formData})
+        console.log(formData, "form-data.....")
+        const activeSurvey = this.props.activeSurvey
+        axios.post("/api/project/createQuestion", {formData, activeSurvey})
            .then(a => console.log('returned.....'))
     }
 
