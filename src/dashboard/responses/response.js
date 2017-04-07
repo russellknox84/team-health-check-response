@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 import axios from "axios"
 
+import { connect } from "react-redux"
+
 import UserResponses from "./userResponse"
 import Filters from "./filters"
 import { groupByQuestion, groupByResponse } from "./response_helpers"
@@ -30,7 +32,9 @@ class Responses extends Component {
     }
     
     componentDidMount() {
-     axios.post("/health-check-response", {})
+    
+     const activeSurvey = this.props.activeSurvey
+     axios.post("/health-check-response", { activeSurvey })
         .then(response => {
         const { data } = response
             console.log(data)
@@ -87,4 +91,8 @@ class Responses extends Component {
    
 
 }
-export default Responses
+
+const mapStateToProps = (state) => ({
+    activeSurvey: state.surveys.activeSurvey
+})
+export default connect(mapStateToProps)(Responses)

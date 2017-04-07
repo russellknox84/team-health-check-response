@@ -7,7 +7,12 @@ const SurveySchema = new db.Schema({
     questions: [{
         type: String,
         ref: "Questions"
-    }]
+    }],
+    results: [{
+        type: String,
+        ref: "Results"
+    }],
+
 })
 
 const SurveyModel = db.model("Survey", SurveySchema)
