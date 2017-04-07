@@ -15,7 +15,7 @@ class Test extends Component {
 
     componentDidMount = () =>{
         console.log(this.props.state, "props state cdm")
-        axios.get("/questions")
+        axios.get("/api/questions")
             .then(response => console.log(response))
     }
 
@@ -44,9 +44,10 @@ class Test extends Component {
         const url = name.toLowerCase().replace(" ", "-")
 
         const surveyName = name
+        const activeProjectId = this.props.activeProject
         const activeProject = this.props.activeProject
 
-        axios.post("/api/project/createsurvey", { surveyName })
+        axios.post("/api/project/createSurvey", { surveyName, activeProjectId })
             .then(survey => {
                      this.props.addSurvey({
                         id: length,
@@ -91,6 +92,7 @@ class Test extends Component {
 const mapStateToProps = (state) => ({
     surveys: state.project.projects[state.project.activeProject].surveysId,
     activeProject: state.project.activeProject,
+    projects: state.project.projects,
     state: state,
 })
 const mapDispatchToProps = (action) => ({

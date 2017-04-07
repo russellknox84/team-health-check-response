@@ -27,7 +27,8 @@ class Project extends Component {
             validation: value.validation || "none",
             values,
             type: value.type || "Radio",
-            isMandatory: value.isMandatory || true
+            isMandatory: value.isMandatory || true,
+            activeSurvey: this.props.activeSurvey
         })
 
 
@@ -56,8 +57,9 @@ class Project extends Component {
 
     publishForm = () => {
         const formData = this.props.questions
-
-        axios.post("/form-data-submission", {formData})
+        console.log(formData, "form-data.....")
+        const activeSurvey = this.props.activeSurvey
+        axios.post("/api/project/createQuestion", {formData, activeSurvey})
            .then(a => console.log('returned.....'))
     }
 

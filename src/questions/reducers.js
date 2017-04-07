@@ -11,7 +11,8 @@ const addQuestion = (state, action) => {
                 validation,
                 values,
                 type,
-                isMandatory
+                isMandatory,
+                activeSurvey
     }],  }}
 
 
@@ -58,7 +59,7 @@ const deleteQuestion = (state, action) => {
         [activeSurvey]: newValues }
 }
 
-const questions = (state = {}, action) => {
+const questions = (state = [], action) => {
     switch(action.type) {
         case "ADD_SURVEY": return addSurveyToQuestionLists(state, action)  
         case "ADD_QUESTION": return addQuestion(state, action);  
