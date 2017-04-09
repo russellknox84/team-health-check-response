@@ -3,8 +3,9 @@ import * as Types from "./radioQuestion"
 
 import "../../../sass/index.scss"
 
-const Checks = ({match, questions, publishForm, editQuestion, activeQuestion, unsetActiveQuestion}) =>
-    <div>
+const Checks = ({match, questions, publishForm, editQuestion, activeQuestion, unsetActiveQuestion}) =>{
+    {console.log(questions, "the questions")}
+    return <div>
         <div>
             <h2 className="heading-small heading-contents">Questions</h2>
         </div>
@@ -25,6 +26,6 @@ const Checks = ({match, questions, publishForm, editQuestion, activeQuestion, un
         <div>
              <button className="button submit-response" onClick={publishForm}>Publish Form</button>
         </div>
-    </div>
+    </div>}
 
 export default Checks

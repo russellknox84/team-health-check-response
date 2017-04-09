@@ -13,13 +13,13 @@ const Test = () => {
 }
 
 describe("test", () => {
-    it("should create x components...", () => {
-        const renderer = createRenderer()
-        renderer.render(<Test />)
-        const output = renderer.getRenderOutput()
-        console.log(output
-        )
+    // it("should create x components...", () => {
+    //     const renderer = createRenderer()
+    //     renderer.render(<Test />)
+    //     const output = renderer.getRenderOutput()
+    //     console.log(output
+    //     )
         
 
-    })
+    // })
 })

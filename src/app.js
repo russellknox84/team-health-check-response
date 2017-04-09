@@ -71,12 +71,6 @@ const initRender = () => {
     axios.all([getQuestions(), getProjects(), getSurveys()])
         .then(axios.spread(function (question, projectsq, survey) {
 
-            // console.log("question", question.data)
-            // console.log("second", projectsq.data)
-            // console.log("surveys", survey.data)
-
-            
-
             const surveyIds = survey.data.map(survey => survey.surveyName)
             
             const surveys = survey.data.reduce((state, value) => {
@@ -93,9 +87,7 @@ const initRender = () => {
             }, {})
 
 
-            const projectIds = projectsq.data.map(ids => {
-                return ids.projectName
-            })
+            const projectIds = projectsq.data.map(ids => ids.projectName)
 
             const questions = survey.data.reduce((state, value) => {
 

@@ -3,13 +3,13 @@ const SurveyModel = require("../surveys/surveyModel")
 
 const createQuestion = (req, res) => {
 
-    const { id, question, validation, values, type, isMandatory } = req.body.formData
+    const { id, question, validation, values, type, isMandatory } = req.body.activeSurveysQuestions
     const activeSurvey = req.body.activeSurvey
 
     SurveyModel.findById(activeSurvey)
         .then(survey => {
 
-        req.body.formData.forEach( question => {
+        req.body.activeSurveysQuestions.forEach( question => {
  
             const questionValues = new QuestionModel({
                 _id: question.question,

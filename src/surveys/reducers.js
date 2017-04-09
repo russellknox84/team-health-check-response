@@ -1,8 +1,8 @@
 import { combineReducers } from "redux"
+import * as types from "./types"
 
-const addSurvey = (state, action) => {
-    const { name, activeProject, id, url } = action.payload
-        console.log("the state", state)
+export const addSurvey = (state, action) => {
+    const { name, id, url } = action.payload
         return {...state, [name]: {
                         projectTitle: name,
                         id,
@@ -13,39 +13,32 @@ const addSurvey = (state, action) => {
                  }
               }
 
-const addSurveyId = (state, action) =>
+export const addSurveyId = (state, action) =>
     [...state, action.payload.name ]   
 
 
-const surveyIds = (state = [], action) => {
+export const surveyIds = (state = [], action) => {
     switch(action.type) {
-        case "ADD_SURVEY": return addSurveyId(state, action);
+        case types.ADD_SURVEY: return addSurveyId(state, action);
         default: return state;
     }
 }
 
-const activeSurvey = (state = "", action) => {
+export const activeSurvey = (state = "", action) => {
     switch(action.type) {
-        case "SET_ACTIVE_SURVEY": return action.surveyName;
-        case "UNSET_ACTIVE_SURVEY": return unsetActiveSurvey(state, action);
+        case types.SET_ACTIVE_SURVEY: return action.surveyName;
+        case types.UNSET_ACTIVE_SURVEY: return unsetActiveSurvey(state, action);
         default: return state;
     }
 }
 
-const unsetActiveSurvey = (state, action) => {
+export const unsetActiveSurvey = (state, action) => {
     return ""
 }
 
-// const surveys = (state = {}, action) =>{
-//     switch(action.type){
-//         case "ADD_NEW_SURVEY": return [];
-//         default: return state;
-//     }
-// }
-
-const surveys = (state = {}, action) => {
+export const surveys = (state = {}, action) => {
     switch(action.type) {
-        case "ADD_SURVEY": return addSurvey(state, action);
+        case types.ADD_SURVEY: return addSurvey(state, action);
         default: return state;
     }
 }

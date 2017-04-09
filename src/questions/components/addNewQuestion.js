@@ -1,5 +1,9 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
+
+import { activeQuestionValues, activeSurvey } from "../selectors"
+import * as actions from "../actions"
 
 class AddNewQuestion extends Component {
 
@@ -9,41 +13,51 @@ class AddNewQuestion extends Component {
     }
  
     updateQuestion = () => {
-        const newQuestionValues = this.props.activeQuestionValue    
-        this.props.updateQuestion(newQuestionValues)
+        const {
+            activeQuestionValue,
+        } = this.props
+    
+        this.props.updateQuestion(activeQuestionValue)
     }
 
     deleteQuestion = () => {
-        const activeQuestion = this.props.activeQuestion
-        const activeSurvey = this.props.activeSurvey
+        const {
+            activeQuestion,
+            activeSurvey,
+            deleteQuestion,
+            unsetActiveQuestion,
+            unsetActiveQuestionValues
+        } = this.props
 
-        this.props.deleteQuestion({ activeQuestion, activeSurvey })
-        this.props.unsetActiveQuestion()
-        this.props.unsetActiveQuestionValues()
+        deleteQuestion({ activeQuestion, activeSurvey })
+        unsetActiveQuestion()
+        unsetActiveQuestionValues()
     }
 
     addQuestion = () => {
-        const newQuestionValues = this.props.activeQuestionValue
+        const {
+            activeQuestionValue,
+            addQuestion,
+            unsetActiveQuestion,
+            unsetActiveQuestionValues
+        } = this.props
 
-        this.props.addQuestion(newQuestionValues)
-        this.props.unsetActiveQuestion()
-        this.props.unsetActiveQuestionValues()
+        addQuestion(activeQuestionValue)
+        unsetActiveQuestion()
+        unsetActiveQuestionValues()
     }
 
     onQuestionUpdate = (e) => {
-        console.log("question", e.target.value)
         const currentValues = this.props.activeQuestionValue
         this.props.onQuestionUpdate({ question: e.target.value }, currentValues)
     }
 
     onTypeUpdate = (e) => {
-        console.log("typevalue", e.target.value)
         const currentValues = this.props.activeQuestionValue
         this.props.onQuestionUpdate({ type: e.target.value }, currentValues)
     }
 
     onMandatoryUpdate = (e) => {
-        console.log("mandatory", e.target.value)
         const currentValues = this.props.activeQuestionValue
         this.props.onQuestionUpdate({ isMandatory: e.target.value }, currentValues)
     }
@@ -107,15 +121,15 @@ class AddNewQuestion extends Component {
    }
 }
 const mapStateToProps = (state) => ({
-    activeQuestionValue: state.questions.activeQuestionvalues,
-    activeSurvey: state.surveys.activeSurvey,
-    state: state
+    activeQuestionValue: activeQuestionValues(state),
+    activeSurvey: activeSurvey(state),
 })
 
-const mapStateToDispatch = (action) => ({
-    onQuestionUpdate: (payload, currentValues) => action({type: "UPDATE_ACTIVE_QUESTION_VALUES", payload, currentValues}),
-    deleteQuestion: (payload) => action({type: "DELETE_QUESTION", payload}),
-    unsetActiveQuestionValues: () => action({type: "UNSET_ACTIVE_QUESTION_VALUES"}),
-    unsetActiveQuestion: () => action({type: "UNSET_ACTIVE_QUESTION"})
-})
+const mapStateToDispatch = (dispatch) => bindActionCreators({
+    onQuestionUpdate: (payload, currentValues) => actions.onQuestionUpdate(payload, currentValues),
+    deleteQuestion: (payload) => actions.deleteQuestion(payload),
+    unsetActiveQuestionValues: () => actions.unsetActiveQuestionValues(),
+    unsetActiveQuestion: () => actions.unsetActiveQuestion()
+}, dispatch)
+
 export default connect(mapStateToProps, mapStateToDispatch)(AddNewQuestion)

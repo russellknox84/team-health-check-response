@@ -1,8 +1,11 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
 import uuid from "uuid"
-
 import axios from "axios"
+
+import * as selectors from "../selectors"
+import * as actions from "../actions"
 
 import ProjectOverview from "./projectOverview"
 import AddNewQuestion from "./addNewQuestion"
@@ -12,6 +15,10 @@ import "../../../sass/index.scss"
 class Project extends Component {
 
     addQuestion = (value) => {
+        const {
+            addQuestion,
+            activeSurvey
+        } = this.props
         
         const values = [
                 {id: 1, value: 1},
@@ -21,54 +28,67 @@ class Project extends Component {
                 {id: 5, value: 5}
             ]
 
-        const id = uuid.v4()
-
-        this.props.addQuestion(this.props.activeSurvey, 
-        {   id,
+        addQuestion(activeSurvey, {   
+            id: `id${uuid.v4()}`,
             question: value.question,
             validation: value.validation,
             values,
             type: value.type || "Text",
             isMandatory: value.isMandatory || true,
-            activeSurvey: this.props.activeSurvey
+            activeSurvey: activeSurvey
         })
-
      }
 
     editQuestion = (e, id) => {
-        const state = this.props.state
         e.preventDefault()
 
-        this.props.setActiveQuestion(id);
+        const {
+            setActiveQuestion,
+            activeSurveysQuestions,
+            setQuestionValues
+        } = this.props
 
-        const activeQuestion = state.questions.questions[state.surveys.activeSurvey]
-
-        const question = activeQuestion.filter(q => {
+        setActiveQuestion(id);
+        
+        const question = activeSurveysQuestions.filter(q => {
             if (id === q.question) return q
             return
         })
-  
-        this.props.setQuestionValues(question[0])
+
+        setQuestionValues(question[0])
+
     }
 
-    unsetActiveQuestion = () => {
+    unsetActiveQuestion = () =>
         this.props.unsetActiveQuestion();
-    }
 
     publishForm = () => {
-        const formData = this.props.questions
-        const activeSurvey = this.props.activeSurvey
 
-        axios.post("/api/project/createQuestion", {formData, activeSurvey})
-           .then(a => console.log('returned.....'))
+        const {
+            activeSurveysQuestions,
+            activeSurvey
+        } = this.props
+
+        axios.post("/api/project/createQuestion", {
+            activeSurveysQuestions, 
+            activeSurvey
+        })
+        .then(a => console.log('returned.....'))
     }
 
     updateQuestion = (newQuestionValue) => {
-        const activeSurvey = this.props.activeSurvey
-        const questionId = this.props.activeQuestion
-        this.props.updateQuestion({newQuestionValue, questionId, activeSurvey})
-        this.props.unsetActiveQuestionValues()
-        this.props.unsetActiveQuestion()
+
+        const {
+            updateQuestion,
+            unsetActiveQuestion,
+            unsetActiveQuestionValues,
+            activeSurvey,
+            activeQuestion
+        } = this.props
+        
+        updateQuestion({newQuestionValue, activeQuestion, activeSurvey})
+        unsetActiveQuestionValues()
+        unsetActiveQuestion()
     }
 
     render(){
@@ -77,8 +97,9 @@ class Project extends Component {
                 <div className="grid-row">
                      <div className="column-one-quarter border-right">
                         <ProjectOverview 
-                            data={this.props.project} 
-                            questions={this.props.questions} 
+                            
+                            data={this.props.activeProjectsSurveys} 
+                            questions={this.props.activeSurveysQuestions} 
                             publishForm={this.publishForm} 
                             editQuestion={this.editQuestion} 
                             activeQuestion={this.props.activeQuestion} 
@@ -98,38 +119,21 @@ class Project extends Component {
     }
 }
 
-// const getActiveValues = (state) => {
-//     const activeQuestion = state.questions.activeQuestion
-//     const activeSurvey = state.surveys.activeSurvey
-//     const questionList = state.questions.questions[activeSurvey]
-
-//     console.log("the quesltion leus", activeQuestion, activeSurvey)
-
-//     return questionList.filter(question => {
-//         if (question.question === activeQuestion) return question
-//         return
-//     })
-
-
-// }
-
 const mapStateToProps = (state) => ({
-    questions: state.questions.questions[state.surveys.activeSurvey],
-    project: state.project.projects[state.surveys.activeSurvey],
-    activeSurvey: state.surveys.activeSurvey,
-    activeQuestion: state.questions.activeQuestion,
-    activeQuestionValue: state.questions.activeQuestionvalues,
-    //activeQuestionValues: getActiveValues(state),
-    state: state
+    activeSurveysQuestions: selectors.activeSurveysQuestions(state),
+    activeProjectsSurveys: selectors.activeProjectsSurveys(state),
+    activeSurvey: selectors.activeSurvey(state),
+    activeQuestion: selectors.activeQuestion(state),
+    activeQuestionValue: selectors.activeQuestionValues(state),
 })
 
-const mapStateToDispatch = (action) => ({
-    addQuestion: (activeSurvey, questions) => action({type: "ADD_QUESTION", activeSurvey, questions}),
-    setActiveQuestion: (questionId) => action({type: "SET_ACTIVE_QUESTION", questionId}),
-    setQuestionValues: (values) => action({type: "SET_ACTIVE_QUESTION_VALUES", values}),
-    unsetActiveQuestionValues: () => action({type: "UNSET_ACTIVE_QUESTION_VALUES"}),
-    unsetActiveQuestion: () => action({type: "UNSET_ACTIVE_QUESTION"}), 
-    updateQuestion: (payload) => action({type: "UPDATE_QUESTION", payload})
-})
+const mapStateToDispatch = (dispatch) => bindActionCreators({
+    addQuestion: (activeSurvey, questions) => actions.addQuestion(activeSurvey, questions),
+    setActiveQuestion: (questionId) => actions.setActiveQuestion(questionId),
+    setQuestionValues: (values) => actions.setQuestionValues(values),
+    unsetActiveQuestionValues: () => actions.unsetActiveQuestionValues(),
+    unsetActiveQuestion: () => actions.unsetActiveQuestion(),
+    updateQuestion: (payload) => actions.updateQuestion(payload)
+}, dispatch)
 
 export default connect(mapStateToProps, mapStateToDispatch)(Project)
