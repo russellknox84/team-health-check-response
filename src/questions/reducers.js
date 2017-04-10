@@ -98,6 +98,7 @@ const unsetActiveState = (state, action) => {
         question: "",
         type: "",
         validation: "",
+        isMandatory: "",
         values: ""
     }
 }
