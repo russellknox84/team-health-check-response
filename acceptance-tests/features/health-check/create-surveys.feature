@@ -20,7 +20,7 @@ A/C     - user can set up a new survey and create the questions that will be ask
   Scenario: Results from my survey are stored in a new collector
     Given that I am on the question page
     And I navigate to the responses tab
-    Results for my survey will be displayed
+    Then results for my survey will be displayed
 
 
 

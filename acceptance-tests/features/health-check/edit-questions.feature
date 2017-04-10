@@ -25,9 +25,12 @@ Feature: Edit Questions
 
   Scenario: I can make a question mandatory
     When I am displayed the field "Is mandatory"
-    Then I can select "Yes"
-    And I can select "No"
-
+    Then I can select the option "Yes"
+    And I can select the option "No"
+    When I click "update"
+    And I select the same question
+    Then the option "Yes" will have persisted
+    
   Scenario: I can change the question type
     When I am displayed the field "Question type"
     Then I can select the options
