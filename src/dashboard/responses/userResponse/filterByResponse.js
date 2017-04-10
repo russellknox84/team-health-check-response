@@ -4,17 +4,12 @@ import "../../../../sass/index.scss"
 
 const FilterByResponse = ({responses}) =>
     <tbody class="filtered-response">
-        {responses.map(response =>          
-        <tr>
-            {response.map(a =>
+        {responses[0].map(response =>          
             <tr>
-                <td>{a.question}</td>                     
-                <td>{a.userResponse}</td>                   
-            </tr>              
-            )}
-            <hr />
-        </tr>                 
-    )}
+                <td>{response.question}</td>                     
+                <td>{response.userResponse}</td>                   
+            </tr>                       
+        )}
     </tbody>
     
 

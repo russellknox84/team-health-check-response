@@ -21,7 +21,7 @@ class Project extends Component {
                 {id: 5, value: 5}
             ]
 
-        const id = uuid.v4()
+        const id = `id${uuid.v4()}`
 
         this.props.addQuestion(this.props.activeSurvey, 
         {   id,

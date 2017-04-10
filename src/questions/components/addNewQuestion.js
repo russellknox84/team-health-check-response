@@ -79,11 +79,11 @@ class AddNewQuestion extends Component {
                         <legend>Is the question mandatory?</legend>
                         <fieldset id="question-configuration">
                             <div className="multiple-choice">
-                                <input onChange={this.onMandatoryUpdate} id="isMandatory" type="radio" name="isMandatory" value="yes" defaultChecked/>
+                                <input onChange={this.onMandatoryUpdate} id="isMandatory" type="radio" name="isMandatory" value="true"/>
                                 <label htmlFor="isMandatory">Yes</label>
                             </div>
                             <div className="multiple-choice">
-                                <input onChange={this.onMandatoryUpdate} id="isMandatory" type="radio" name="isMandatory" value="no"/>
+                                <input onChange={this.onMandatoryUpdate} id="isMandatory" type="radio" name="isMandatory" value="false"/>
                                 <label htmlFor="isMandatory">No</label>
                             </div>
                         </fieldset>
