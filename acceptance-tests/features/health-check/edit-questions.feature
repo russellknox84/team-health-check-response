@@ -28,7 +28,7 @@ Feature: Edit Questions
     Then I can select "Yes"
     And I can select "No"
 
-  Scenario: I can change the quetion type
+  Scenario: I can change the question type
     When I am displayed the field "Question type"
     Then I can select the options
     | Radio           |
