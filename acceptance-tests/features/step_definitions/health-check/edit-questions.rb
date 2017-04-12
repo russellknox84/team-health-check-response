@@ -23,8 +23,8 @@ end
 When(/question will be displayed for editing/i) do
     within(page.find_by_id("question-editor")) do
         #find_field("question").should have_content("Question 1")
-        #expect(page).to have_field("question", :text => "Question 1")
-        expect(page).to have_field("question")
+        expect(page).to have_field("question", :with => "Question 1")
+        #expect(page).to have_field("question")
     end
 end
 
