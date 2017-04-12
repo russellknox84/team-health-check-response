@@ -7,37 +7,35 @@ Feature: Edit Questions
 
   Scenario: I can add questions
     Given that I fill out the question details
-    And I click "add"
+    And I click "Add"
     Then my question will be displayed in the list of questions
 
   Scenario: I can edit my existing question
     Given that I select an existing question
     Then the question will be displayed for editing
     When I edit the question
-    And I click "update"
+    And I click "Update"
     Then my question will be updated in the list of questions
-    
-  Scenario: I can delete questions
-    Given that I select an existing question
-    Then the question will be displayed for editing
-    When I click "delete"
-    Then my question will be deleted from the list of questions
 
   Scenario: I can make a question mandatory
     When I am displayed the field "Is mandatory"
     Then I can select the option "Yes"
     And I can select the option "No"
-    When I click "update"
+    When I click "Update"
     And I select the same question
-    Then the option "Yes" will have persisted
+    Then the option "No" will have persisted
     
   Scenario: I can change the question type
     When I am displayed the field "Question type"
     Then I can select the options
-    | Radio           |
-    | Yes/No          |
+    | Scaled question |
     | Text            |
-    | Multiple Choice |
+
+  Scenario: I can delete questions
+    Given that I select an existing question
+    Then the question will be displayed for editing
+    When I click "Delete"
+    Then my question will be deleted from the list of questions
 
 
 

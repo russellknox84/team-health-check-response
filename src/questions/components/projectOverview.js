@@ -5,7 +5,7 @@ import "../../../sass/index.scss"
 
 const Checks = ({match, questions, publishForm, editQuestion, activeQuestion, unsetActiveQuestion}) =>{
     {console.log(questions, "the questions")}
-    return <div>
+    return <div id="question-list">
         <div>
             <h2 className="heading-small heading-contents">Questions</h2>
         </div>

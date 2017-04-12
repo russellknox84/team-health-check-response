@@ -66,13 +66,14 @@ class AddNewQuestion extends Component {
         const {id, question, type, isMandatory} = this.props.activeQuestionValue
 
         return (
-            <div>
+            <div id="question-editor">
                 <div className="grid-row">
                     <div className="column-half">
                         <h2 className="heading-small">Question</h2>
                         <div className="form-group">
-                            <label className="form-label" htmlFor="first-name-2">Title</label>
+                            <label className="form-label" htmlFor="question">Title</label>
                             <input 
+                                id="question-title" 
                                 value={question} 
                                 onChange={this.onQuestionUpdate} 
                                 className="form-control full-width"  
@@ -93,11 +94,11 @@ class AddNewQuestion extends Component {
                         <legend>Is the question mandatory?</legend>
                         <fieldset id="question-configuration">
                             <div className="multiple-choice">
-                                <input onChange={this.onMandatoryUpdate} id="isMandatory" checked={isMandatory !== "false"} type="radio" name="isMandatory" value="true"/>
+                                <input onChange={this.onMandatoryUpdate} id="isMandatory-yes" checked={isMandatory !== "false"} type="radio" name="isMandatory" value="true"/>
                                 <label htmlFor="isMandatory">Yes</label>
                             </div>
                             <div className="multiple-choice">
-                                <input onChange={this.onMandatoryUpdate} id="isMandatory" checked={isMandatory === "false"} type="radio" name="isMandatory" value="false"/>
+                                <input onChange={this.onMandatoryUpdate} id="isMandatory-no" checked={isMandatory === "false"} type="radio" name="isMandatory" value="false"/>
                                 <label htmlFor="isMandatory">No</label>
                             </div>
                         </fieldset>

@@ -1,4 +1,4 @@
-Feature: Edit Questions
+Feature: Namespaces
  
 A/C   - user is able create a team level area where surveys can be set up
       - user is able to navigate to surveys by team, e.g:
@@ -12,7 +12,7 @@ A/C   - user is able create a team level area where surveys can be set up
   Scenario: I am able to set up projects
     Given that I am on the projects page
     When I enter the project name
-    And click the "Create" button
+    And I click "Add Project"
     Then my project will be displayed in the list of surveys
     
   Scenario: I am able to view surveys by project

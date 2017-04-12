@@ -3,7 +3,7 @@ import React from "react"
 import SurveyListLinks from "./surveyListLink"
 
 const SurveyList = ({ surveys, match, setActiveSurvey }) =>
-        <div className="column-one-quarter border-right overflow-auto">
+        <div id="survey-list" className="column-one-quarter border-right overflow-auto">
             <h2 className="heading-small heading-contents">Current Surveys</h2>
             {surveys.map(survey => 
                 <div>

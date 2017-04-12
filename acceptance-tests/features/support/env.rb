@@ -21,7 +21,7 @@ if ENV['IN_BROWSER']
   Capybara.register_driver :selenium do |app|
     
     driver = Selenium::WebDriver.for :chrome
-    driver.navigate.to "localhost:3000"
+    driver.navigate.to "localhost:3333"
     # profile['browser.helperApps.alwaysAsk.force'] = false
     # profile['browser.cache.disk.enable'] = false
     # profile['browser.cache.memory.enable'] = false
