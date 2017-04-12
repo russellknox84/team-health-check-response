@@ -22,9 +22,9 @@ const addQuestion = (state, action) => {
 }
 
 const addSurveyToQuestionLists = (state, action) => {
-    const { name } = action.payload
+    const { surveyName } = action.payload
         return {...state, 
-            [name]: []        
+            [surveyName]: []        
         }             
 }             
 
@@ -72,13 +72,14 @@ const questions = (state = [], action) => {
         case types.ADD_SURVEY: return addSurveyToQuestionLists(state, action)  
         case types.ADD_QUESTION: return addQuestion(state, action);  
         case types.DELETE_QUESTION: return deleteQuestion(state, action);
-        case types.UPDATE_QUESTION: return updateQuestion(state, action);    
+        case types.UPDATE_QUESTION: return updateQuestion(state, action); 
         default: return state;
     }
 }
 
 const setActiveQuestionValues = (state, action) => {
     const { id, question, type } = action.values  
+    console.log(action)
     return Object.assign(action.values, { id, question, type })
 }
 

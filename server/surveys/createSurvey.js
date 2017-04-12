@@ -2,15 +2,17 @@ const Survey = require("./surveyModel")
 const Project = require("../projects/projectModel")
 
 const createSurvey = (req, res) => {
-    
-    const { surveyName, activeProjectId } = req.body
-   
-    Project.findById(activeProjectId)
+
+    const { id, surveyName, published, url, activeProject } = req.body.survey
+
+    Project.findById(activeProject)
         .then(project => {
 
             const survey = new Survey({
-                _id: surveyName,
-                surveyName
+                _id: id,
+                surveyName,
+                published,
+                url
             })
             
             project.test = surveyName

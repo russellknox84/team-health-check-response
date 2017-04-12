@@ -12,3 +12,10 @@ export const activeSurveysQuestions = state =>
 
 export const activeProjectsSurveys = state =>
     state.project.projects[state.surveys.activeSurvey]
+
+export const activeSurveyId = state =>
+    state.surveys.surveys[activeSurvey(state)]._id
+
+
+export const isActiveSurveyPublished = (state) => 
+    state.surveys.surveys[activeSurvey(state)].published

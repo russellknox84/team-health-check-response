@@ -17,7 +17,8 @@ class Project extends Component {
     addQuestion = (value) => {
         const {
             addQuestion,
-            activeSurvey
+            activeSurvey,
+            activeSurveyId
         } = this.props
         
         const values = [
@@ -27,9 +28,8 @@ class Project extends Component {
                 {id: 4, value: 4},
                 {id: 5, value: 5}
             ]
-
-
-        addQuestion(activeSurvey, {   
+        
+        const activeQuestionValues = {   
             id: `id${uuid.v4()}`,
             question: value.question,
             validation: value.validation,
@@ -37,7 +37,15 @@ class Project extends Component {
             type: value.type || "Text",
             isMandatory: value.isMandatory || true,
             activeSurvey: activeSurvey
-        })
+        }
+
+        console.log(activeSurveyId, this.props.state)
+       axios.post("/api/question/add", { activeQuestionValues, activeSurveyId })
+            .then(response => {
+                addQuestion(activeSurvey, activeQuestionValues)
+            })
+
+ 
      }
 
     editQuestion = (e, id) => {
@@ -46,7 +54,8 @@ class Project extends Component {
         const {
             setActiveQuestion,
             activeSurveysQuestions,
-            setQuestionValues
+            setQuestionValues,
+            activeQuestion
         } = this.props
 
         setActiveQuestion(id);
@@ -67,14 +76,15 @@ class Project extends Component {
 
         const {
             activeSurveysQuestions,
-            activeSurvey
+            activeSurveyId,
+            activeSurvey,
+            publishSurvey
         } = this.props
 
-        axios.post("/api/project/createQuestion", {
-            activeSurveysQuestions, 
-            activeSurvey
+        axios.put("/api/survey/publishSurvey", {
+            activeSurveyId
         })
-        .then(a => console.log('returned.....'))
+        .then(a => publishSurvey(activeSurvey))
     }
 
     updateQuestion = (newQuestionValue) => {
@@ -84,10 +94,28 @@ class Project extends Component {
             unsetActiveQuestion,
             unsetActiveQuestionValues,
             activeSurvey,
-            activeQuestion
+            activeQuestion,
+            activeQuestionValue
         } = this.props
         
         updateQuestion({newQuestionValue, activeQuestion, activeSurvey})
+
+        console.log(activeQuestionValue, "active question alue")
+
+        axios.put("/api/question/update", { activeQuestionValue, activeSurvey, activeQuestion })
+        .then(response => {
+            return
+            // addQuestion(activeSurvey, {   
+            //     id: `id${uuid.v4()}`,
+            //     question: value.question,
+            //     validation: value.validation,
+            //     values,
+            //     type: value.type || "Text",
+            //     isMandatory: value.isMandatory || true,
+            //     activeSurvey: activeSurvey
+            // })
+        })
+
         unsetActiveQuestionValues()
         unsetActiveQuestion()
     }
@@ -97,14 +125,11 @@ class Project extends Component {
             <div className="container">
                 <div className="grid-row">
                      <div className="column-one-quarter border-right">
-                        <ProjectOverview 
-                            
-                            data={this.props.activeProjectsSurveys} 
+                        <ProjectOverview         
                             questions={this.props.activeSurveysQuestions} 
                             publishForm={this.publishForm} 
                             editQuestion={this.editQuestion} 
-                            activeQuestion={this.props.activeQuestion} 
-                            unsetActiveQuestion={this.unsetActiveQuestion}
+                            isActiveSurveyPublished={this.props.isActiveSurveyPublished}
                         />
                      </div>                 
                      <div className="column-three-quarter">
@@ -126,6 +151,9 @@ const mapStateToProps = (state) => ({
     activeSurvey: selectors.activeSurvey(state),
     activeQuestion: selectors.activeQuestion(state),
     activeQuestionValue: selectors.activeQuestionValues(state),
+    activeSurveyId: selectors.activeSurveyId(state),
+    isActiveSurveyPublished: selectors.isActiveSurveyPublished(state),
+    state: state
 })
 
 const mapStateToDispatch = (dispatch) => bindActionCreators({
@@ -134,7 +162,8 @@ const mapStateToDispatch = (dispatch) => bindActionCreators({
     setQuestionValues: (values) => actions.setQuestionValues(values),
     unsetActiveQuestionValues: () => actions.unsetActiveQuestionValues(),
     unsetActiveQuestion: () => actions.unsetActiveQuestion(),
-    updateQuestion: (payload) => actions.updateQuestion(payload)
+    updateQuestion: (payload) => actions.updateQuestion(payload),
+    publishSurvey: (payload) => actions.publishSurvey(payload)
 }, dispatch)
 
 export default connect(mapStateToProps, mapStateToDispatch)(Project)

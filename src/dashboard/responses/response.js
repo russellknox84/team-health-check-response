@@ -62,11 +62,12 @@ class Responses extends Component {
         e.preventDefault()
 
         const filterByDays = e.target.value
-
+        const activeSurvey = this.props.activeSurvey
         this.setState({ checked: parseInt(filterByDays)})
 
-        axios.post("/health-check-response", { filterByDays })
+        axios.post("/health-check-response/filter-days", { filterByDays,  activeSurvey})
         .then(resp => {
+            console.log(resp, "the response..")
             const { data } = resp
             this.outputResponse(data)
         })

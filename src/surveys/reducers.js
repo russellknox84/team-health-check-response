@@ -2,20 +2,21 @@ import { combineReducers } from "redux"
 import * as types from "./types"
 
 export const addSurvey = (state, action) => {
-    const { name, id, url } = action.payload
-        return {...state, [name]: {
-                        projectTitle: name,
+    console.log(action, "the actions..")
+    const { surveyName, id, url, published } = action.payload
+        return {...state, [surveyName]: {
+                        surveyName,
                         id,
+                        _id: id,
                         url,
-                        draft: false,
-                        published: false,
+                        published,
                     }
                  }
               }
 
-export const addSurveyId = (state, action) =>
-    [...state, action.payload.name ]   
-
+export const addSurveyId = (state, action) =>{
+    return [...state, action.payload.surveyName ]   
+}
 
 export const surveyIds = (state = [], action) => {
     switch(action.type) {
@@ -36,9 +37,20 @@ export const unsetActiveSurvey = (state, action) => {
     return ""
 }
 
+const publishSurvey = (state, action) => {
+    console.log("reach ehrer", action)
+    return {...state, 
+        [action.payload]: {
+            ...state[action.payload],
+            published: !state[action.payload].published
+        }
+    }
+}
+
 export const surveys = (state = {}, action) => {
     switch(action.type) {
         case types.ADD_SURVEY: return addSurvey(state, action);
+        case "PUBLISH_SURVEY": return publishSurvey(state, action); 
         default: return state;
     }
 }

@@ -74,9 +74,8 @@ const initRender = () => {
             const surveyIds = survey.data.map(survey => survey.surveyName)
             
             const surveys = survey.data.reduce((state, value) => {
-                return Object.assign(state, {[value.surveyName]: {
-                    surveysId: []
-                }})
+                console.log(value, "surveys lvalues")
+                return Object.assign(state, {[value.surveyName]: value })
             }, {})
 
             const projects = projectsq.data.reduce((state, value) => {
@@ -90,8 +89,8 @@ const initRender = () => {
             const projectIds = projectsq.data.map(ids => ids.projectName)
 
             const questions = survey.data.reduce((state, value) => {
-
-                    return {...state, [value.surveyName]: value.questions}
+    
+                 return {...state, [value.surveyName]: value.questions}
             }, {})
 
 

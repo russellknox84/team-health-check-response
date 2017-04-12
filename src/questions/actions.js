@@ -39,3 +39,8 @@ export const updateQuestion = (payload) => ({
     type: types.UPDATE_QUESTION, 
     payload
 })
+
+export const publishSurvey = (payload) => ({
+    type: types.PUBLISH_SURVEY,
+    payload
+})

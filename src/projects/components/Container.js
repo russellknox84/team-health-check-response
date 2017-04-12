@@ -1,6 +1,15 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { Link, Route, BrowserRouter as Router } from "react-router-dom"
+import { bindActionCreators } from "redux"
+
+import { activeProject, activeSurvey } from "../selectors"
+
+import {
+    unsetActiveProject,
+    unsetActiveSurvey,
+} from "../actions"
+
 
 import {Dashboard} from "../../dashboard"
 import Questions from "../../questions/components/Project"
@@ -27,16 +36,16 @@ class Container extends Component {
                             <li>
                                 <Link className="link" to="/projects">Projects</Link>
                             </li>
-                            {this.props.projectName ?
+                            {this.props.activeProject ?
                             <li>
                                 <div className="spacer"> > </div>
-                                <Link className="link" to={`/projects/${this.props.projectName}`}>{this.props.projectName}</Link>
+                                <Link className="link" to={`/projects/${this.props.activeProject}`}>{this.props.activeProject}</Link>
                             </li> : ""
                             }
-                            {this.props.surveyName ?
+                            {this.props.activeSurvey ?
                             <li>
                                 <div className="spacer"> > </div>
-                                <Link className="link" to={`/projects/${this.props.projectName}/${this.props.surveyName}`}>{this.props.surveyName}</Link>
+                                <Link className="link" to={`/projects/${this.props.activeProject}/${this.props.activeSurvey}`}>{this.props.activeSurvey}</Link>
                             </li> : ""
                             }
                         </ul>
@@ -55,13 +64,13 @@ class Container extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    projectName: state.project.activeProject,
-    surveyName: state.surveys.activeSurvey
+    activeProject: activeProject(state),
+    activeSurvey: activeSurvey(state)
 })
 
-const mapStateToDispatch = (action) => ({
-    unsetActiveProject: () => action({type: "UNSET_ACTIVE_PROJECT"}),
-    unsetActiveSurvey: () => action({type: "UNSET_ACTIVE_SURVEY"})
-})
+const mapStateToDispatch = dispatch => bindActionCreators({
+    unsetActiveProject,
+    unsetActiveSurvey
+}, dispatch)
 
 export default connect(mapStateToProps, mapStateToDispatch)(Container)

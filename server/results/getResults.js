@@ -1,9 +1,10 @@
 const SurveyModel = require("../surveys/surveyModel")
 const ResultsModel = require("./resultsModel")
 
+const moment = require("moment")
+
 const getResults = (req, res) => {
 
-    // const { id, question, validation, values, type, isMandatory } = req.body.formData
     const activeSurvey = req.body.activeSurvey
 
     SurveyModel.findById(activeSurvey)
@@ -13,7 +14,15 @@ const getResults = (req, res) => {
 
         const resultData = results.results
 
-         res.send(resultData)
+        const formattedData = resultData.map(a => {
+            return Object.assign({}, {
+                _id: a.id,
+                date: moment(a.date).format("DD MMM YYYY"),
+                userResponse: a.userResponse
+            })
+        })
+        
+        res.send(formattedData)
     })
     .catch(err => console.log(err))
 }

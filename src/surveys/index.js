@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import axios from "axios"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
+import uuid from "uuid"
 
 import { surveyList, activeProject } from "./selectors"
 import { 
@@ -19,29 +20,37 @@ import "../../sass/index.scss"
 class Survey extends Component {
 
     componentDidMount = () =>{
+        console.log(this.props.state)
         this.props.unsetActiveSurvey();
         this.props.unsetActiveQuestion();
     }
     addSurvey = (e) => {
         e.preventDefault()
-        const length = this.props.surveyList.length + 1
-        const name = e.target.newProject.value
+
+        const {
+            activeProject,
+            addNewSurvey
+        } = this.props
+
+        const surveyName = e.target.newProject.value
         const url = name.toLowerCase().replace(" ", "-")
+        const id = uuid.v4()
+        const survey = {
+            _id: id,
+            id,
+            surveyName,
+            url,
+            activeProject,
+            published: false
+        }
 
-        const surveyName = name
-        const activeProjectId = this.props.activeProject
-        const activeProject = this.props.activeProject
+        axios.post("/api/project/createSurvey", { survey })
+            .then(surveys => {
 
-        axios.post("/api/project/createSurvey", { surveyName, activeProjectId })
-            .then(survey => {
-                     this.props.addNewSurvey({
-                        id: length,
-                        name, 
-                        activeProject,
-                        url
-                     })
+                addNewSurvey(survey)
             })
-            e.target.newProject.value = ""
+            
+        e.target.newProject.value = ""
     }
 
     render = () => {
@@ -63,7 +72,8 @@ class Survey extends Component {
 
 const mapStateToProps = (state) => ({
     surveyList: surveyList(state),
-    activeProject: activeProject(state)
+    activeProject: activeProject(state),
+    state: state
 })
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     addNewSurvey,

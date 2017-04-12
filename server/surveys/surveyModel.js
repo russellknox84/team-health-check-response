@@ -4,6 +4,8 @@ const Schema = require("mongoose").Schema
 const SurveySchema = new db.Schema({
     _id: String,
     surveyName: String, 
+    url: String,
+    published: Boolean,
     questions: [{
         type: String,
         ref: "Questions"

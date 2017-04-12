@@ -5,6 +5,8 @@ import { bindActionCreators } from "redux"
 import { activeQuestionValues, activeSurvey } from "../selectors"
 import * as actions from "../actions"
 
+import axios from "axios"
+
 class AddNewQuestion extends Component {
 
     componentDidMount = () => {
@@ -26,12 +28,16 @@ class AddNewQuestion extends Component {
             activeSurvey,
             deleteQuestion,
             unsetActiveQuestion,
-            unsetActiveQuestionValues
+            unsetActiveQuestionValues,
+            activeQuestionValue
         } = this.props
 
-        deleteQuestion({ activeQuestion, activeSurvey })
-        unsetActiveQuestion()
-        unsetActiveQuestionValues()
+        axios.put("/api/question/delete", { activeQuestionValue, activeSurvey })
+            .then(response => {
+                deleteQuestion({ activeQuestion, activeSurvey })
+                unsetActiveQuestion()
+                unsetActiveQuestionValues()
+            })
     }
 
     addQuestion = () => {
@@ -39,12 +45,15 @@ class AddNewQuestion extends Component {
             activeQuestionValue,
             addQuestion,
             unsetActiveQuestion,
-            unsetActiveQuestionValues
+            unsetActiveQuestionValues,
+            activeSurvey
         } = this.props
 
+   
         addQuestion(activeQuestionValue)
         unsetActiveQuestion()
         unsetActiveQuestionValues()
+  
     }
 
     onQuestionUpdate = (e) => {

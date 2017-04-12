@@ -1,7 +1,18 @@
 import React, { Component } from "react"
 import { Link, Route } from "react-router-dom"
 import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
 import axios from "axios"
+
+import { projectsList } from "../selectors"
+
+import {
+    addNewProject,
+    setActiveProject,
+    unsetActiveProject,
+    unsetActiveSurvey,
+    unsetActiveQuestion
+} from "../actions"
 
 class ProjectList extends Component {
 
@@ -36,7 +47,7 @@ class ProjectList extends Component {
                 <div className="column-one-quarter border-right overflow-auto">
                 <h2 className="heading-small heading-contents">Current Projects</h2>
                     <div>
-                        {this.props.projects.map(project => {
+                        {this.props.projectsList.map(project => {
                             {console.log(this.props)}
                             return  <div>
                                         <Link role="button" className="tab" onClick={() => this.setActiveProject(project)} to={`${this.props.match.url}/${project}`}>{project}</Link>
@@ -66,16 +77,15 @@ class ProjectList extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    projects: state.project.projectIds,
-    state: state
+    projectsList: projectsList(state),
 })
 
-const mapDispatchToProps = (dispatch) => ({
-    addNewProject: (projectName) => dispatch({type: "ADD_NEW_PROJECT", projectName }),
-    setActiveProject: (projectId) => dispatch({type: "SET_ACTIVE_PROJECT", projectId }),
-    unsetActiveProject: () => dispatch({type: "UNSET_ACTIVE_PROJECT"}),
-    unsetActiveSurvey: () => dispatch({type: "UNSET_ACTIVE_SURVEY"}),
-    unsetActiveQuestion: () => dispatch({type: "UNSET_ACTIVE_QUESTION"})
-})
+const mapDispatchToProps = dispatch => bindActionCreators({
+    addNewProject,
+    setActiveProject,
+    unsetActiveProject,
+    unsetActiveSurvey,
+    unsetActiveQuestion
+}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectList)
