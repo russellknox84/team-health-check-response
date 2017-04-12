@@ -1,18 +1,35 @@
 import React from "react"
-import * as T from "./radioQuestion"
+import * as Types from "./radioQuestion"
 
 import "../../../sass/index.scss"
 
-const Checks = ({match, data, questions, publishForm}) =>{
-    return <div>
-        {questions.question.map(question => {
-            const Q = T[question.type]
-           
-          return <div> <Q {...question} /> </div>
-        })}
+const Checks = ({questions, publishForm, editQuestion, isActiveSurveyPublished}) =>{
+    {console.log(questions, "the questions")}
+    return <div id="question-list">
         <div>
-             <button className="submit-response" onClick={publishForm}>PUBLISH FORM</button>
+            <h2 className="heading-small heading-contents">Questions</h2>
         </div>
-    </div>
-}
+        <div>
+            {questions.map(question => {
+                const QuestionsTypes = Types[question.type]
+            
+                return (
+                    <div> 
+                        <QuestionsTypes 
+                            {...question} 
+                            editQuestion={editQuestion} 
+                        />
+                    </div>
+                )
+            })}  
+        </div>             
+        <div>
+            {isActiveSurveyPublished ? 
+                 <button className="button submit-response" onClick={publishForm}>Publish Survey</button>: 
+                 <button className="button submit-response" onClick={publishForm}>Unpublished</button>
+            }
+             
+        </div>
+    </div>}
+
 export default Checks

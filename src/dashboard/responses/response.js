@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 import axios from "axios"
 
+import { connect } from "react-redux"
+
 import UserResponses from "./userResponse"
 import Filters from "./filters"
 import { groupByQuestion, groupByResponse } from "./response_helpers"
@@ -30,10 +32,16 @@ class Responses extends Component {
     }
     
     componentDidMount() {
-     axios.post("/health-check-response", {})
+
+     const { activeSurveyId } = this.props
+     console.log(activeSurveyId, "active")
+     axios.post("/health-check-response", { activeSurveyId })
         .then(response => {
+
         const { data } = response
-            console.log(data)
+
+        console.log("the data.....", data)
+        console.log(data)
           this.outputResponse(data)
         })
     }
@@ -58,11 +66,12 @@ class Responses extends Component {
         e.preventDefault()
 
         const filterByDays = e.target.value
-
+        const { activeSurveyId } = this.props
         this.setState({ checked: parseInt(filterByDays)})
 
-        axios.post("/health-check-response", { filterByDays })
+        axios.post("/health-check-response/filter-days", { filterByDays,  activeSurveyId })
         .then(resp => {
+            console.log(resp, "the response..")
             const { data } = resp
             this.outputResponse(data)
         })
@@ -77,12 +86,6 @@ class Responses extends Component {
         return (<div>
             <div className="container">
                 <div className="grid-row">
-                    <div className="column-full">
-                        <h2 className="heading-medium">User Responses</h2>
-                        <hr />
-                    </div>
-                </div>
-                <div className="grid-row">
                     <Filters {...this} />
                     <UserResponses responses={this.state.responses} type={this.state.type} />
                 </div> 
@@ -93,4 +96,8 @@ class Responses extends Component {
    
 
 }
-export default Responses
+
+const mapStateToProps = (state) => ({
+    activeSurveyId: state.surveys.surveys[state.surveys.activeSurvey]._id,
+})
+export default connect(mapStateToProps)(Responses)

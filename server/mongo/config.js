@@ -1,5 +1,6 @@
 const db = require("mongoose")
 
+
 db.Promise = global.Promise
 
 const DB_HOST = process.env.DB_HOST || 'localhost/teamHealthCheck';

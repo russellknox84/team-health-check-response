@@ -1,7 +1,11 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-
+import { bindActionCreators } from "redux"
+import uuid from "uuid"
 import axios from "axios"
+
+import * as selectors from "../selectors"
+import * as actions from "../actions"
 
 import ProjectOverview from "./projectOverview"
 import AddNewQuestion from "./addNewQuestion"
@@ -10,15 +14,13 @@ import "../../../sass/index.scss"
 
 class Project extends Component {
 
-    addQuestion = (e) => {
-        e.preventDefault()
-        const question = e.target.question.value
+    addQuestion = (value) => {
+        const {
+            addQuestion,
+            activeSurvey,
+            activeSurveyId
+        } = this.props
         
-        
-        // const validation = [...e.target.validation].map(a => {
-        //     if (a.checked === true) return a.value
-        // })
-        const type = e.target.type.value
         const values = [
                 {id: 1, value: 1},
                 {id: 2, value: 2},
@@ -26,45 +28,116 @@ class Project extends Component {
                 {id: 4, value: 4},
                 {id: 5, value: 5}
             ]
-        const removeSpace = question.replace(" ", "-")
-        const id = `Q${removeSpace.substring(0, 14)}`
         
-        
-
-        console.log(type, "type")
-
-        this.props.addQuestion(this.props.activeProject, {
-            id,
-            question,
-            validation: "none",
+        const activeQuestionValues = {   
+            id: `id${uuid.v4()}`,
+            question: value.question,
+            validation: value.validation,
             values,
-            type
+            type: value.type || "Text",
+            isMandatory: value.isMandatory || true,
+            activeSurvey: activeSurvey
+        }
+
+        console.log(activeSurveyId, this.props.state)
+       axios.post("/api/question/add", { activeQuestionValues, activeSurveyId })
+            .then(response => {
+                addQuestion(activeSurvey, activeQuestionValues)
+            })
+
+ 
+     }
+
+    editQuestion = (e, id) => {
+        e.preventDefault()
+
+        const {
+            setActiveQuestion,
+            activeSurveysQuestions,
+            setQuestionValues,
+            activeQuestion
+        } = this.props
+
+        setActiveQuestion(id);
+        
+        const question = activeSurveysQuestions.filter(q => {
+            if (id === q.question) return q
+            return
         })
 
-        e.target.question.value = ""
-
+        setQuestionValues(question[0])
 
     }
 
-    publishForm = () => {
-        const formData = this.props.questions
+    unsetActiveQuestion = () =>
+        this.props.unsetActiveQuestion();
 
-        axios.post("/form-data-submission", {formData})
-           .then(a => console.log('returned.....'))
+    publishForm = () => {
+
+        const {
+            activeSurveysQuestions,
+            activeSurveyId,
+            activeSurvey,
+            publishSurvey
+        } = this.props
+
+        axios.put("/api/survey/publishSurvey", {
+            activeSurveyId
+        })
+        .then(a => publishSurvey(activeSurvey))
+    }
+
+    updateQuestion = (newQuestionValue) => {
+
+        const {
+            updateQuestion,
+            unsetActiveQuestion,
+            unsetActiveQuestionValues,
+            activeSurvey,
+            activeQuestion,
+            activeQuestionValue
+        } = this.props
+        
+        updateQuestion({newQuestionValue, activeQuestion, activeSurvey})
+
+        console.log(activeQuestionValue, "active question alue")
+
+        axios.put("/api/question/update", { activeQuestionValue, activeSurvey, activeQuestion })
+        .then(response => {
+            return
+            // addQuestion(activeSurvey, {   
+            //     id: `id${uuid.v4()}`,
+            //     question: value.question,
+            //     validation: value.validation,
+            //     values,
+            //     type: value.type || "Text",
+            //     isMandatory: value.isMandatory || true,
+            //     activeSurvey: activeSurvey
+            // })
+        })
+
+        unsetActiveQuestionValues()
+        unsetActiveQuestion()
     }
 
     render(){
         return (
             <div className="container">
                 <div className="grid-row">
-                     <div className="column-half">
-                          <h2 className="heading-small heading-contents">Questions</h2>
-                          <ProjectOverview data={this.props.project} questions={this.props.questions} publishForm={this.publishForm}/>
-                     </div>
-                   
-                     <div className="column-half">
-                          <h2 className="heading-small heading-contents">Add Question:</h2>
-                          <AddNewQuestion  addOne={this.addQuestion} />
+                     <div className="column-one-quarter border-right">
+                        <ProjectOverview         
+                            questions={this.props.activeSurveysQuestions} 
+                            publishForm={this.publishForm} 
+                            editQuestion={this.editQuestion} 
+                            isActiveSurveyPublished={this.props.isActiveSurveyPublished}
+                        />
+                     </div>                 
+                     <div className="column-three-quarter">
+                        <AddNewQuestion 
+                            updateQuestion={this.updateQuestion}
+                            activeQuestion={this.props.activeQuestion}
+                            addQuestion={this.addQuestion}
+                        />         
                      </div>
                 </div>
             </div>
@@ -73,14 +146,24 @@ class Project extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    questions: state.projects.projects[state.projects.activeProject.id],
-    project: state.projects.projects[state.projects.activeProject.id],
-    activeProject: state.projects.activeProject,
-    summary: state.projects
+    activeSurveysQuestions: selectors.activeSurveysQuestions(state),
+    activeProjectsSurveys: selectors.activeProjectsSurveys(state),
+    activeSurvey: selectors.activeSurvey(state),
+    activeQuestion: selectors.activeQuestion(state),
+    activeQuestionValue: selectors.activeQuestionValues(state),
+    activeSurveyId: selectors.activeSurveyId(state),
+    isActiveSurveyPublished: selectors.isActiveSurveyPublished(state),
+    state: state
 })
 
-const mapStateToDispatch = (action) => ({
-    addQuestion: (activeProject, question, questionId) => action({type: "ADD_QUESTION", activeProject, question})
-})
+const mapStateToDispatch = (dispatch) => bindActionCreators({
+    addQuestion: (activeSurvey, questions) => actions.addQuestion(activeSurvey, questions),
+    setActiveQuestion: (questionId) => actions.setActiveQuestion(questionId),
+    setQuestionValues: (values) => actions.setQuestionValues(values),
+    unsetActiveQuestionValues: () => actions.unsetActiveQuestionValues(),
+    unsetActiveQuestion: () => actions.unsetActiveQuestion(),
+    updateQuestion: (payload) => actions.updateQuestion(payload),
+    publishSurvey: (payload) => actions.publishSurvey(payload)
+}, dispatch)
 
 export default connect(mapStateToProps, mapStateToDispatch)(Project)
