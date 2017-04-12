@@ -18,9 +18,10 @@ Feature: Edit Questions
     Then my question will be updated in the list of questions
 
   Scenario: I can make a question mandatory
+    Given that I select an existing question
     When I am displayed the field "Is mandatory"
-    Then I can select the option "Yes"
-    And I can select the option "No"
+    Then I can select the option "yes"
+    And I can select the option "no"
     When I click "Update"
     And I select the same question
     Then the option "No" will have persisted
