@@ -13,10 +13,10 @@ describe("Survey reducers", () => {
 
     it("should handle ADD_SURVEY and create new survey namespace", () => {
         const payload = {
-                name: "SurveyName-ONE",
+                surveyName: "SurveyName-ONE",
                 id: 1234,
+                _id: 1234,
                 url: "survey-name",
-                draft: false,
                 published: false
         }
 
@@ -27,10 +27,10 @@ describe("Survey reducers", () => {
         const expected = {
             ["SurveyName-TWO"]: {},
             ["SurveyName-ONE"]: {
-                projectTitle: "SurveyName-ONE",
+                surveyName: "SurveyName-ONE",
                 id: 1234,
+                _id: 1234,
                 url: "survey-name",
-                draft: false,
                 published: false,
             }         
         }
@@ -47,7 +47,7 @@ describe("Survey reducers", () => {
     it("should handle ADD_SURVEY and create new surveyID", () => {
 
         const payload = {
-                name: "SurveyName-TWO"
+                surveyName: "SurveyName-TWO"
             }
 
         const actual = reducers.surveyIds(["SurveyName-ONE"], actions.addNewSurvey(payload))

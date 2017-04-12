@@ -32,12 +32,16 @@ class Responses extends Component {
     }
     
     componentDidMount() {
-    
-     const activeSurvey = this.props.activeSurvey
-     axios.post("/health-check-response", { activeSurvey })
+
+     const { activeSurveyId } = this.props
+     console.log(activeSurveyId, "active")
+     axios.post("/health-check-response", { activeSurveyId })
         .then(response => {
+
         const { data } = response
-            console.log(data)
+
+        console.log("the data.....", data)
+        console.log(data)
           this.outputResponse(data)
         })
     }
@@ -62,10 +66,10 @@ class Responses extends Component {
         e.preventDefault()
 
         const filterByDays = e.target.value
-        const activeSurvey = this.props.activeSurvey
+        const { activeSurveyId } = this.props
         this.setState({ checked: parseInt(filterByDays)})
 
-        axios.post("/health-check-response/filter-days", { filterByDays,  activeSurvey})
+        axios.post("/health-check-response/filter-days", { filterByDays,  activeSurveyId })
         .then(resp => {
             console.log(resp, "the response..")
             const { data } = resp
@@ -94,6 +98,6 @@ class Responses extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    activeSurvey: state.surveys.activeSurvey
+    activeSurveyId: state.surveys.surveys[state.surveys.activeSurvey]._id,
 })
 export default connect(mapStateToProps)(Responses)

@@ -5,9 +5,9 @@ const moment = require("moment")
 
 const getResults = (req, res) => {
 
-    const activeSurvey = req.body.activeSurvey
+    const { activeSurveyId } = req.body
 
-    SurveyModel.findById(activeSurvey)
+    SurveyModel.findById(activeSurveyId)
         .populate("results")
         .lean()
         .then(results => {

@@ -5,11 +5,9 @@ const moment = require("moment")
 const getResults = (req, res) => {
 
     const days = req.body.filterByDays || 7
-    const activeSurvey = req.body.activeSurvey
+    const { activeSurveyId } = req.body
 
-    console.log(days, activeSurvey)
-
-    SurveyModel.findById(activeSurvey)
+    SurveyModel.findById(activeSurveyId)
         .populate("results")
         .lean()
         .then(results => {

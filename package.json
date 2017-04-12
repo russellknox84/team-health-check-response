@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "mocha-webpack --webpack-config webpack.test.config.js \"test/**/*_test.js\"",
+    "test": "DB_HOST=localhost/test_teamHealthCheck mocha-webpack --webpack-config webpack.test.config.js \"test/**/*_test.js\"",
     "dev": "nodemon app.js",
     "build": "webpack",
     "watch:sass": "nodemon -e scss -x 'npm run sass'",
