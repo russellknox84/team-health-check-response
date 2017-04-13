@@ -9,7 +9,6 @@ const ProjectSchema = new db.Schema({
         type: String,
         ref: "Survey"
     }],
-    test: String
 })
 
 const ProjectModel = db.model("Project", ProjectSchema)
