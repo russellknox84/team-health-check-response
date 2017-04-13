@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 
-import { activeQuestionValues, activeSurvey } from "../selectors"
+import { activeQuestionValues, activeSurvey, isSurveyDraft } from "../selectors"
 import * as actions from "../actions"
 
 import axios from "axios"
@@ -115,14 +115,18 @@ class AddNewQuestion extends Component {
                 </div>
                 <div className="grid-row">
                     <div className="column-full">
-                    {this.props.activeQuestion ?
+                    {this.props.isSurveyDraft ?
                         <div>
-                            <button onClick={this.updateQuestion} className="button submit-response margin-right">Update</button>
-                            <button onClick={this.deleteQuestion} className="button submit-response">Delete</button>
-                        </div> :
-                        <div>
-                            <button onClick={this.addQuestion} className="button submit-response">Add</button>
-                        </div>
+                        {this.props.activeQuestion ?
+                            <div>
+                                <button onClick={this.updateQuestion} className="button submit-response margin-right">Update</button>
+                                <button onClick={this.deleteQuestion} className="button submit-response">Delete</button>
+                            </div> :
+                            <div>
+                                <button onClick={this.addQuestion} className="button submit-response">Add</button>
+                            </div>
+                        } 
+                        </div> : <div></div>
                     }
                     </div>
                 </div>
@@ -133,6 +137,7 @@ class AddNewQuestion extends Component {
 const mapStateToProps = (state) => ({
     activeQuestionValue: activeQuestionValues(state),
     activeSurvey: activeSurvey(state),
+    isSurveyDraft: isSurveyDraft(state)
 })
 
 const mapStateToDispatch = (dispatch) => bindActionCreators({

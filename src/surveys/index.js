@@ -41,7 +41,8 @@ class Survey extends Component {
             surveyName,
             url,
             activeProject,
-            published: false
+            published: false,
+            draft: true
         }
 
         axios.post("/api/project/createSurvey", { survey })

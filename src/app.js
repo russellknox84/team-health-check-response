@@ -74,7 +74,7 @@ const initRender = () => {
             const surveyIds = survey.data.map(survey => survey.surveyName)
             
             const surveys = survey.data.reduce((state, value) => {
-                console.log(value, "surveys lvalues")
+
                 return Object.assign(state, {[value.surveyName]: value })
             }, {})
 

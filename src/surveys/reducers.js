@@ -3,13 +3,14 @@ import * as types from "./types"
 
 export const addSurvey = (state, action) => {
     console.log(action, "the actions.. bananbs")
-    const { surveyName, id, url, published } = action.payload
+    const { surveyName, id, url, published, draft } = action.payload
         return {...state, [surveyName]: {
                         surveyName,
                         id,
                         _id: id,
                         url,
                         published,
+                        draft
                     }
                  }
               }
@@ -42,7 +43,8 @@ const publishSurvey = (state, action) => {
     return {...state, 
         [action.payload]: {
             ...state[action.payload],
-            published: !state[action.payload].published
+            published: !state[action.payload].published,
+            draft: false
         }
     }
 }

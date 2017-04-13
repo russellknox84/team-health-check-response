@@ -7,6 +7,7 @@ const SurveySchema = new db.Schema({
     surveyName: String, 
     url: String,
     published: Boolean,
+    draft: Boolean,
     questions: [{
         type: String,
         ref: "Questions"

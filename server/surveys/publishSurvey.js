@@ -7,6 +7,7 @@ const publishSurvey = (req, res) => {
     Survey.findById(activeSurveyId)
         .then(survey => {
             survey.published = !survey.published
+            survey.draft = false
             survey.save()
             res.send()    
         })

@@ -16,6 +16,8 @@ export const activeProjectsSurveys = state =>
 export const activeSurveyId = state =>
     state.surveys.surveys[activeSurvey(state)]._id
 
-
 export const isActiveSurveyPublished = (state) => 
     state.surveys.surveys[activeSurvey(state)].published
+
+export const isSurveyDraft = (state) => 
+    state.surveys.surveys[activeSurvey(state)].draft

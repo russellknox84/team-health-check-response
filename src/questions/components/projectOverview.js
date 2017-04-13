@@ -25,8 +25,8 @@ const Checks = ({questions, publishForm, editQuestion, isActiveSurveyPublished})
         </div>             
         <div>
             {isActiveSurveyPublished ? 
-                 <button className="button submit-response" onClick={publishForm}>Publish Survey</button>: 
-                 <button className="button submit-response" onClick={publishForm}>Unpublished</button>
+                 <button className="button submit-response" onClick={publishForm}>Unpublish</button>: 
+                 <button className="button submit-response" onClick={publishForm}>Publish</button>
             }
              
         </div>
