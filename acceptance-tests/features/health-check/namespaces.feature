@@ -18,7 +18,6 @@ A/C   - user is able create a team level area where surveys can be set up
   Scenario: I am able to view surveys by project
     Given that I am on the projects page
     Then I select my project
-    When I am on the surveys page
-    Then my survey will be displayed in the list of surveys
+    And I am on the surveys page
 
 

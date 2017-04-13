@@ -11,7 +11,8 @@ Given(/I am on the surveys page/i) do
     steps %{
         Given that I am on the projects page
     }
-    click_link("My Project")
+    #click_link("My Project")
+    first(:link, "My Project").click
     current_path.should == "/projects/My%20Project"
 end
 
@@ -19,7 +20,8 @@ Given(/I am on the question page/i) do
     steps %{
         Given that I am on the surveys page
     }
-    click_link("My Survey")
+    #click_link("My Survey")
+    first(:link, "My Survey").click
 end
 
 Given(/navigate to the responses tab/i) do

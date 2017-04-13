@@ -44,7 +44,7 @@ class ProjectList extends Component {
       return (   
         <div className="container">
             <div className="grid-row">
-                <div className="column-one-quarter border-right overflow-auto">
+                <div id="project-list" className="column-one-quarter border-right overflow-auto">
                 <h2 className="heading-small heading-contents">Current Projects</h2>
                     <div>
                         {this.props.projectsList.map(project => {
@@ -56,7 +56,7 @@ class ProjectList extends Component {
                         )}
                     </div>
                  </div>
-                 <div className="column-three-quarter">
+                 <div id="project-editor" className="column-three-quarter">
                  <h2 className="heading-small heading-contents">Add new project</h2>
                         <form onSubmit={this.addNewProject}>
                         <div className="form-group">
