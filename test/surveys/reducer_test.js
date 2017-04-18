@@ -16,6 +16,7 @@ describe("Survey reducers", () => {
                 surveyName: "SurveyName-ONE",
                 id: 1234,
                 _id: 1234,
+                draft: false,
                 url: "survey-name",
                 published: false
         }
@@ -30,6 +31,7 @@ describe("Survey reducers", () => {
                 surveyName: "SurveyName-ONE",
                 id: 1234,
                 _id: 1234,
+                draft: false,
                 url: "survey-name",
                 published: false,
             }         

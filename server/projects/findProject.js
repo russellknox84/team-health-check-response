@@ -1,18 +1,18 @@
-const Project = require("./projectModel")
+// const Project = require("./projectModel")
 
-const findProject = (req, res) => {
+// const findProject = (req, res) => {
 
-    // const { projectName } = "sdf"
+//     // const { projectName } = "sdf"
 
-    // Project.findById("58e13030c8fb3e2df3855836")
-    //     .then(project => {
+//     // Project.findById("58e13030c8fb3e2df3855836")
+//     //     .then(project => {
             
-    //         project.test = "Dragon Fruit"
-    //         res.send(project)
-    //     })
+//     //         project.test = "Dragon Fruit"
+//     //         res.send(project)
+//     //     })
 
-    // // project.save()
-    // //     .then(project => res.send())
-}
+//     // // project.save()
+//     // //     .then(project => res.send())
+// }
 
-module.exports = findProject
+// module.exports = findProject

@@ -2,6 +2,7 @@ const QuestionModel = require("./questionModel")
 const SurveyModel = require("../surveys/surveyModel")
 
 const updateQuestion = (req, res) => {
+    
     const { activeSurvey, activeQuestion, activeQuestionValue } = req.body
     const { id, question, validation, values, type, isMandatory } = activeQuestionValue
 

@@ -1,6 +1,7 @@
 const QuestionModel = require("./questionModel")
 
 const deleteQuestion = (req, res) => {
+    
     const { activeQuestion, activeQuestionValue } = req.body
     const { id } = activeQuestionValue
 

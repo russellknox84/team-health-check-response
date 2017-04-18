@@ -2,7 +2,6 @@ import { combineReducers } from "redux"
 import * as types from "./types"
 
 export const addSurvey = (state, action) => {
-    console.log(action, "the actions.. bananbs")
     const { surveyName, id, url, published, draft } = action.payload
         return {...state, [surveyName]: {
                         surveyName,
@@ -39,7 +38,6 @@ export const unsetActiveSurvey = (state, action) => {
 }
 
 const publishSurvey = (state, action) => {
-    console.log("reach ehrer", action)
     return {...state, 
         [action.payload]: {
             ...state[action.payload],
