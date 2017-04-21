@@ -1,0 +1,55 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+    name: Team-Health-Check-Deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels: Team-Health-Check
+      name: Team-Health-Check
+    spec:
+      containers:
+      - name: Team-Health-Check-Responses
+        image: team-health-check-responses
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: DB_HOST
+            value: mongo
+          - name: DB_USER
+            value: user
+          - name: DB_PASS
+            value: pass
+        ports:
+          - containerPort: 3000
+      - name: Team-Health-Check
+        image: team-health-check
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 3000
+        env:
+          - name: DB_HOST
+            value: mongo
+          - name: DB_USER
+            value: user
+          - name: DB_PASS
+            value: pass
+      - name: mongo
+        image: mongo
+        imagePullPolicy: IfNotPresent
+        command:
+            - mongod
+        ports:
+          - containerPort: 27017
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: user
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            value: pass
+        volumeMounts:
+            - name: mongo-persistent-storage
+              mountPath: /data/db
+      volumes:
+        - name: mongo-persistent-storage
+          emptyDir: {}

@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: team-health-check-responses
+    labels:
+      name: team-health-check-responses
+spec:
+  ports:
+  - port: 8080
+    targetPort: 3000
+    protocol: TCP
+    name: http
+  selector:
+    name: team-health-check-responses

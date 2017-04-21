@@ -1,0 +1,23 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: team-health-check-responses
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: team-health-check-responses
+    spec:
+      containers:
+      - name: team-health-check-responses
+        image: team-health-check-responses
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: PORT
+          value: "3000"
+        - name: DB_HOST
+          value: mongo
+        ports:
+          - containerPort: 3000
