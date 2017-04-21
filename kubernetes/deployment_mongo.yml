@@ -23,6 +23,8 @@ spec:
         volumeMounts:
           - name: mongo-persistent-storage
             mountPath: /data/db
+      terminationGracePeriodSeconds: 30
       volumes:
         - name: mongo-persistent-storage
-          emptyDir: {}
+          hostPath:
+            path: /data/mongo/mongodb-node-01

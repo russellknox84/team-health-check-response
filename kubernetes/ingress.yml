@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: team-health-check
+spec:
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /client
+        backend:
+          serviceName: team-health-check-client
+          servicePort: 8081
